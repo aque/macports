@@ -1,0 +1,153 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+# Portfile is based on fink
+# http://fink.cvs.sourceforge.net/fink/dists/10.7/stable/main/finkinfo/languages/fpc.info
+
+PortSystem          1.0
+
+name                fpc
+version             2.6.4
+categories          devel
+platforms           darwin
+license             GPL LGPL
+maintainers         gmail.com:allan.que openmaintainer
+description         Free Pascal (aka FPK Pascal) compiler
+
+long_description    Free Pascal (aka FPK Pascal) is a 32 and 64 bit \
+                    professional Pascal compiler. The language syntax has \
+                    excellent compatibility with TP 7.0 as well as with most \
+                    versions of Delphi (classes, rtti, exceptions, \
+                    ansistrings, widestrings, interfaces). A Mac Pascal \
+                    compatibility mode is also provided to assist users of \
+                    previous Pascal compilers for the Mac. Furthermore, Free \
+                    Pascal supports function overloading, operator overloading, \
+                    global properties and other modern features.
+
+homepage            http://www.freepascal.org
+master_sites        sourceforge:freepascal
+
+distfiles           fpcbuild-${version}.tar.gz \
+                    universal-macosx-10.5-ppcuniversal.tar.bz2
+
+checksums           fpcbuild-2.6.4.tar.gz \
+                    rmd160  339b71d3c9983a720eed7c6bda1cfd330d89966f \
+                    sha256  8d9c3bcfa469d9b37c05663e2775d179809e4b3443604fac7d21aa64c9a56daa \
+                    universal-macosx-10.5-ppcuniversal.tar.bz2 \
+                    rmd160  0124c2f4447ba7f96e3db0a27e6bff459c5749f4 \
+                    sha256  e7243e83e6a04de147ebab7530754ec92cd1fbabbc9b6b00a3f90a796312f3e9
+
+worksrcdir          fpcbuild-${version}/fpcsrc
+
+depends_build       port:cctools
+
+use_configure       no
+
+variant ide description {Build text mode IDE} {}
+
+patch {
+    # the following changes were copied from fink
+    
+    # see svn revision 22954; needed for i386-iphonesim. Changes this line:
+    #           LinkRes.Add('-ios_version_min');
+    reinplace "s|-ios_version_min|-iphoneos_version_min|g" compiler/systems/t_bsd.pas
+
+    # maybe fixed in next version, building lazarus-gtk2 likes it.
+    reinplace "s|\{\$linklib gthread-2.0\}|\{\$linklib gthread-2.0\}\{\$linklib pangocairo-1.0\}|g" \
+        packages/gtk2/src/gtk+/gtk/gtk2.pas
+}
+
+if {${os.platform} eq "darwin" && ${os.major} >= 14} {
+    macosx_deployment_target  10.9
+}
+
+set fpc.bootstrap   ${workpath}/ppcuniversal
+build.post_args     OPT="-ap" \
+                    PP="arch -${os.arch} ${fpc.bootstrap}"
+
+if {${os.arch} eq "i386"} {
+    set fpc.ppcarch "ppc386"
+} elseif {${os.arch} eq "x86_64"} {
+    set fpc.ppcarch "ppcx64"
+} elseif {${os.arch} eq "ppc"} {
+    set fpc.ppcarch "ppcppc"
+}
+
+set fpc.fpcmake      ${workpath}/${worksrcdir}/utils/fpcm/fpcmake
+set fpc.archcompiler ${workpath}/${worksrcdir}/compiler/${fpc.ppcarch}
+set fpc.rtlpath   {}
+
+post-build {
+    getrtlpath "-Fu"
+
+    # There is no gdb/libgdb support on ide
+    # libgdb support is deprecated
+    # http://www.mail-archive.com/fpc-devel@lists.freepascal.org/msg13661.html
+    if {[variant_isset ide]} {
+        system -W ${workpath}/${worksrcdir} \
+            "${build.cmd} ide OPT=\"-ap\" PP=${fpc.archcompiler}"
+    }
+
+    system -W ${workpath}/${worksrcdir}/compiler/utils \
+        "${fpc.archcompiler} ${fpc.rtlpath} msgdif.pp"
+
+    system -W ${workpath}/${worksrcdir}/../install/man \
+        "${build.cmd} INSTALL_PREFIX=\"${destroot}${prefix}/share\""
+
+    system -W ${workpath}/${worksrcdir}/../install/doc \
+        "${build.cmd} INSTALL_PREFIX=\"${destroot}${prefix}/share\" \
+        PP=\"${fpc.archcompiler}\""
+
+}
+
+test {
+    getrtlpath "-FU"
+
+    ui_msg "This took 20 mins. on a quad-core Intel i7. Please be patient."
+    system -W ${workpath}/${worksrcdir}/tests "${build.cmd} full \
+        TEST_FPC=${fpc.archcompiler} \
+        FPC=${fpc.archcompiler} \
+        FPCMAKE=${fpc.fpcmake} \
+        OPT=\"${fpc.rtlpath}\""
+}
+
+destroot.post_args  INSTALL_PREFIX="${destroot}${prefix}" \
+                    PP="${fpc.archcompiler}" \
+                    FPCMAKE="${fpc.fpcmake}"
+
+post-destroot {
+    system -W ${destroot}${prefix} \
+        "ln -sf ../lib/fpc/${version}/${fpc.ppcarch} bin/${fpc.ppcarch}"
+
+    xinstall ${workpath}/${worksrcdir}/compiler/utils/msgdif ${destroot}${prefix}/bin
+
+    # create the fpc.cfg file
+    file mkdir ${destroot}${prefix}/etc
+    system -W ${destroot}${prefix} \
+        "lib/fpc/${version}/samplecfg ${destroot}${prefix}/lib/fpc/${version} etc"
+    reinplace "s|${destroot}||g" ${destroot}${prefix}/etc/fpc.cfg
+    file rename "${destroot}${prefix}/etc/fpc.cfg" "${destroot}${prefix}/etc/fpc.cfg.dist"
+
+    # install the ide
+    if {[variant_isset ide]} {
+        system -W ${workpath}/${worksrcdir} \
+            "${build.cmd} ide_install INSTALL_PREFIX=${destroot}${prefix} \
+            PP=${fpc.archcompiler} FPCMAKE=${fpc.fpcmake}"
+    }
+}
+
+post-activate {
+    # avoid overwriting user copy of fpc.cfg
+    if {![file exists "${prefix}/etc/fpc.cfg"]} {
+        file copy "${prefix}/etc/fpc.cfg.dist" "${prefix}/etc/fpc.cfg"
+    }
+}
+
+proc getrtlpath {option} {
+    global fpc.rtlpath workpath worksrcdir
+    set fpc.rtldirlist  [readdir ${workpath}/${worksrcdir}/rtl/units]
+    # append helper unit directory search path
+    foreach unitdir ${fpc.rtldirlist} {
+        append fpc.rtlpath " ${option}${workpath}/${worksrcdir}/rtl/units/${unitdir}"
+    }
+}

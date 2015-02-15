@@ -1,0 +1,120 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+# port not working
+# fontconfig attempting to install outside of sandbox
+#
+
+PortSystem          1.0
+#PortGroup           python 1.0
+
+name                HandBrake
+version             0.10.0
+platforms           darwin
+categories          multimedia
+maintainers         gmail.com:allan.que openmaintainer
+license             GPL-2
+
+description         open source video transcoder
+long_description    ${description}
+
+homepage            http://handbrake.fr/
+
+depends_build       port:yasm \
+                    port:autoconf \
+                    port:automake \
+                    port:libtool
+
+use_bzip2           yes
+master_sites        http://handbrake.fr/rotation.php?file=${distname}${extract.suffix}&dummy=:src \
+                    http://download.handbrake.fr/handbrake/contrib/:contrib
+
+distfiles           ${distname}${extract.suffix}:src \
+                    fdk-aac-v0.1.1-6-gbae4553.tar.bz2:contrib \
+                    fontconfig-2.8.0.tar.gz:contrib \
+                    freetype-2.4.7.tar.bz2:contrib \
+                    fribidi-0.19.2.tar.gz:contrib \
+                    lame-3.98.tar.gz:contrib \
+                    libass-0.10.0-1.tar.gz:contrib \
+                    libav-v10.1.tar.bz2:contrib \
+                    libdvdnav-5.0.1-0-gaa3659d.tar.gz:contrib \
+                    libdvdread-5.0.0-6-gcb1ae87.tar.gz:contrib \
+                    libogg-1.3.0.tar.gz:contrib \
+                    libvpx-v1.3.0.tar.bz2:contrib \
+                    libxml2-2.7.7.tar.gz:contrib \
+                    pkg-config-0.28.tar.bz2:contrib \
+                    yasm-1.2.0.tar.gz:contrib
+
+checksums           ${name}-${version}${extract.suffix} \
+                    rmd160  c0140fd33b4ca3fea3dd43a5960a71055a00acc8 \
+                    sha256  a91042da3cc08454844f7c171ee2fde4f0ed08176407fc0328d5118227ed4114 \
+                    fdk-aac-v0.1.1-6-gbae4553.tar.bz2 \
+                    rmd160  608d8b8028b33a8ebcbf3e5d52f3c778dd52768b \
+                    sha256  f08584d59a02db5facf548ae860c64d2870db63477f605af763c161a1508dcbc \
+                    fontconfig-2.8.0.tar.gz \
+                    rmd160  fefee412cad4fa71b573e997e14f1df12f439be2 \
+                    sha256  fa2a1c6eea654d9fce7a4b1220f10c99cdec848dccaf1625c01f076b31382335 \
+                    freetype-2.4.7.tar.bz2 \
+                    rmd160  48abfcd4546cbd6626796ab121252e804ddcc6d8 \
+                    sha256  ba22620479954582371286268ef75e6e932c0270ee67d6797bbf3ed9d31a5d77 \
+                    fribidi-0.19.2.tar.gz \
+                    rmd160  4fafb4b3140bbbcf4c2c58c714b02db2d71e5491 \
+                    sha256  49cf91586e48b52fe25872ff66c1da0dff0daac2593f9f300e2af12f44f64177 \
+                    lame-3.98.tar.gz \
+                    rmd160  c10c20128622e16f9cac3d346bea8e390e4bfdc5 \
+                    sha256  40235e84dfe4760ad3f352590a64b7bda1502a386c97d06229df356426e37686 \
+                    libass-0.10.0-1.tar.gz \
+                    rmd160  da29a27a4ae107629d0ea6dd7ec21f1d36167b16 \
+                    sha256  a0c652f4a5c1bfd58cd47ff627fff2dfbd471b40f765aa96fd1b251c0058b867 \
+                    libav-v10.1.tar.bz2 \
+                    rmd160  fc9420a1ce8f081df592dbc2ac4500771103b38b \
+                    sha256  bc3807426d4e73fe8c245730b0df4ba95766cf7e17e47c738ee302f73d066ac9 \
+                    libdvdnav-5.0.1-0-gaa3659d.tar.gz \
+                    rmd160  a712563c197a3f24636be7aa87396400f110e0f7 \
+                    sha256  574b7af7ff52e21048ab62c0b14271e651faafb5d46f8efc64dbd82ff34e162b \
+                    libdvdread-5.0.0-6-gcb1ae87.tar.gz \
+                    rmd160  708aa5031b16c9b63d6382e9dd223da874702d53 \
+                    sha256  d2e4200c3c5d5f812892f9c14851c94e2f707d54e7328946c6397ac999f15f17 \
+                    libogg-1.3.0.tar.gz \
+                    rmd160  143fa1639ee2175a6609f32287414d6b23deea6f \
+                    sha256  a8de807631014615549d2356fd36641833b8288221cea214f8a72750efe93780 \
+                    libvpx-v1.3.0.tar.bz2 \
+                    rmd160  bf74821ac8f20ed30f44b6e01473ee1f332f721c \
+                    sha256  d3dcc8d84af51c6c382b214397c62402e37a799e8ebcda6f4217aef0010451a9 \
+                    libxml2-2.7.7.tar.gz \
+                    rmd160  9f72c778c3e9e348a68eada0cf624c012658c085 \
+                    sha256  af5b781418ba4fff556fa43c50086658ea8a2f31909c2b625c2ce913a1d9eb68 \
+                    pkg-config-0.28.tar.bz2 \
+                    rmd160  64345c2b9b96090a2a5d21a17f33cad1c602e3a9 \
+                    sha256  df11472da5745fabb015b2928836ff4232c005f1551fd79c7893017239cec977 \
+                    yasm-1.2.0.tar.gz \
+                    rmd160  6d2baf27a45d6dbe250f972f18fb6627f50394d9 \
+                    sha256  768ffab457b90a20a6d895c39749adb547c1b7cb5c108e84b151a838a23ccf31
+
+extract.only        ${distname}${extract.suffix}
+
+post-extract {
+    file mkdir ${worksrcpath}/download
+    foreach distfile ${distfiles} {
+        if {[regexp {^(.+):([^:]+)} ${distfile} -> distfilename distfiletag]} {
+            if {${distfiletag} == "contrib"} {
+                file copy ${distpath}/${distfilename} ${worksrcpath}/download
+            }
+        }
+    }
+}
+
+patch {
+#    reinplace -W ${workpath}/${worksrcdir} "s|scriptversion|exit;scriptversion|g" \
+#            build/contrib/fontconfig/fontconfig-2.8.0/install-sh
+}
+
+configure.args      --prefix=${destroot}${prefix} \
+                    --fetch=curl \
+                    --arch=${configure.build_arch}
+
+# parallel build not recommended according to
+# https://trac.handbrake.fr/browser/trunk/doc/BUILD-Mac
+use_parallel_build  no
+
+build.dir           ${worksrcpath}/build
+build.target

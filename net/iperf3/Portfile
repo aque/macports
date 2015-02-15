@@ -1,0 +1,42 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+
+name                iperf3
+version             3.0.11
+categories          net
+platforms           darwin
+license             bsd
+maintainers         gmail.com:allan.que openmaintainer
+description         Measures the maximum achievable bandwidth on IP networks
+long_description    ${name} is a tool for active measurements of the maximum \
+                    achievable bandwidth on IP networks. It supports tuning \
+                    of various parameters related to timing, protocols, and \
+                    buffers. For each test it reports the bandwidth, loss, \
+                    and other parameters.
+homepage            https://github.com/esnet/iperf
+
+master_sites        http://downloads.es.net/pub/iperf
+distname            iperf-${version}
+
+conflicts           ${name}-devel
+
+checksums           rmd160  eb371c0879fad6f2068a279704d637123bbd9162 \
+                    sha256  e01db5be6f47f67c987463095fe4f5b8b9ff891fb92c39104d042ad8fde97f6e
+
+subport ${name}-devel {
+    PortGroup           github 1.0
+
+    github.setup        esnet iperf 6bd4e258d0440e036e8780528e2d5aacdaaba6b2
+    version             20150114
+    fetch.type          git
+
+    conflicts           ${name}
+
+    livecheck.type      none
+}
+
+livecheck.url       ${master_sites}
+livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
+livecheck.type      regex

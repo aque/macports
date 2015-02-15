@@ -1,0 +1,48 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 120979 2014-06-13 15:51:30Z mf2k@macports.org $
+
+PortSystem 1.0
+
+name                iperf
+version             2.0.5
+revision            1
+categories          net
+platforms           darwin
+license             permissive
+maintainers         gmail.com:allan.que openmaintainer
+
+description         A tool to measure maximum TCP and UDP bandwidth
+long_description    Iperf is a tool for measuring maximum TCP and UDP \
+                    bandwidth, reminiscent of ttcp and nettest. It has \
+                    been written to overcome the shortcomings of those \
+                    aging tools. Iperf can also test UDP bandwidth, \
+                    loss, and jitter. Primary development has moved \
+                    to Iperf 3 and this is to maintain compatibility \
+                    with legacy code and scripts.
+
+homepage            http://iperf.sourceforge.net
+master_sites        sourceforge:iperf
+
+checksums           rmd160  975d971974437136ae72bb17c0f776ea92eaf878 \
+                    sha256  636b4eff0431cea80667ea85a67ce4c68698760a9837e1e9d13096d20362265b
+
+# submitted patches from iperf sourceforge site
+# http://sourceforge.net/p/iperf/patches/
+patchfiles          patch-015-new-delay.diff \
+                    patch-018-currlen-unsigned-bug.diff \
+                    patch-019-update-buffer-size-usage.diff \
+                    patch-020-eliminate-printf-compiler-warnings.diff \
+                    patch-022-parallel-bind.diff \
+                    patch-026-multicast-support.diff \
+                    patch-027-allowburst.diff \
+                    patch-028-nomaxcpu.diff \
+                    patch-029-out-of-tree-configure.diff
+
+variant base description {Build without any patches} {
+    # in case there is an issue with a patch
+    patch {}
+}
+
+livecheck.url       http://sourceforge.net/projects/${name}/rss
+livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
+livecheck.type      regex

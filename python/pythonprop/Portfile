@@ -1,0 +1,89 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+
+name                pythonprop
+version             0.17
+categories          python science
+platforms           darwin
+license             GPL-2
+maintainers         gmail.com:allan.que openmaintainer
+description         python scripts designed to work with voacap
+long_description    pythonProp is a collection of Python scripts designed to work \
+                    with VOACAP, allowing users to create input files using a Graphical \
+                    User Interface and plot output files.
+homepage            http://www.qsl.net/h/hz1jw/pythonprop
+
+master_sites        sourceforge:pythonprop
+distname            ${name}-${version}
+
+checksums           rmd160  6386bce496609ec54ef918e45014558d3ff312c9 \
+                    sha256  5a9e803f2b42b4206becefaec663b6e7c872dc753c1a443eae1b101f98221dff
+
+variant python26 conflicts python27 description {Use python 2.6} {}
+
+variant python27 conflicts python26 description {Use python 2.7} {}
+
+if {![variant_isset python26] && ![variant_isset python27]} {
+    default_variants-append +python27
+}
+
+if {[variant_isset python26]} {
+    set python.branch       2.6
+    set python.version      26
+    depends_lib-append      port:python26
+} elseif {[variant_isset python27]} {
+    set python.branch       2.7
+    set python.version      27
+    depends_lib-append      port:python27
+}
+
+depends_build       port:pkgconfig
+
+depends_lib         port:gnome-doc-utils \
+                    port:py-matplotlib-basemap
+
+depends_run         port:adwaita-icon-theme \
+                    port:gnome-icon-theme \
+                    port:gnome-icon-theme-symbolic \
+                    port:gtk3 \
+                    port:py${python.version}-dateutil \
+                    port:py${python.version}-gobject3 \
+                    port:py${python.version}-matplotlib-basemap \
+                    port:xorg-libX11 \
+                    port:voacapl
+
+set python.prefix       ${frameworks_dir}/Python.framework/Versions/${python.branch}
+set python.bin          ${python.prefix}/bin/python${python.branch}
+set python.packages     ${python.prefix}/lib/python${python.branch}/site-packages
+
+configure.pkg_config_path   ${python.prefix}/lib/pkgconfig
+
+pre-configure {
+    # move python site-packages out from under ${prefix}
+    reinplace "s|pyexecdir=\$am_cv_python_pyexecdir|pyexecdir=${python.packages}|g" ${worksrcpath}/configure
+    reinplace "s|pythondir=\$am_cv_python_pythondir|pythondir=${python.packages}|g" ${worksrcpath}/configure
+}
+
+pre-destroot {
+    system -W ${worksrcpath} "chmod 0755 install-sh"
+}
+
+post-destroot {
+    # use the python variant instead of the system default
+    reinplace "s|#!/usr/bin/env python|#!/usr/bin/env python${python.branch}|g" \
+        ${destroot}${prefix}/bin/voa3DPlot \
+        ${destroot}${prefix}/bin/voaAreaPlot \
+        ${destroot}${prefix}/bin/voaAreaPlotgui \
+        ${destroot}${prefix}/bin/voaP2PPlot \
+        ${destroot}${prefix}/bin/voaP2PPlotgui \
+        ${destroot}${prefix}/bin/voaP2PPlotServer \
+        ${destroot}${prefix}/bin/voacapgui
+}
+
+#livecheck.type      sourceforge
+livecheck.type      regex
+livecheck.url       http://sourceforge.net/projects/${name}/rss
+#livecheck.regex     "/files/${name}-(\[0-9\]+\\.\[0-9.\]+)${extract.suffix}"
+livecheck.regex     "/[quotemeta ${name}]-(\\d+(?:\\.\\d+)*)${extract.suffix}"

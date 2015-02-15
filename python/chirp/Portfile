@@ -1,0 +1,63 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                chirp
+version             0.4.1
+categories-append   science
+platforms           darwin
+license             GPL-2
+maintainers         gmail.com:allan.que openmaintainer
+description         open-source tool for programming your amateur radio
+long_description    ${name} is a free, open-source tool for programming your amateur radio. \
+                    It supports a large number of manufacturers and models, as well as provides \
+                    a way to interface with multiple data sources and formats. This is the GTK \
+                    version. The native Mac app can be downloaded from the web site.
+
+homepage            http://chirp.danplanet.com/
+
+master_sites        http://chirp.danplanet.com/download/${version}
+distfiles           ${name}-${version}.tar.gz
+
+conflicts           ${name}-devel
+
+checksums           rmd160  5cbd3aefeba9e4feabfbef0952aa63837dd29c02 \
+                    sha256  8c9d652dc89dbab9e2a1a75c07aa7179ce403de078a4d02814365f89e183319e
+
+python.default_version  27
+
+depends_lib-append  port:py${python.version}-serial \
+                    port:py${python.version}-libxml2 \
+                    port:py${python.version}-pygtk
+
+subport ${name}-devel {
+    version         20141220
+
+    master_sites    http://trac.chirp.danplanet.com/chirp_daily/LATEST/
+    distname        ${name}-daily-${version}
+    distfiles       ${distname}.tar.gz
+
+    conflicts       ${name}
+
+    checksums       rmd160  acee90cf75f569790dcb52c4511dc2f6d061b2a0 \
+                    sha256  0c0bac8bd92989ad4d00b616cca14833c92c0b5b6c7ee4b671000e7cedd10313
+
+    livecheck.regex "${name}-daily-(\\d+)${extract.suffix}"
+}
+
+patch {
+    # build the GTK version instead
+    reinplace "s|= \"darwin\"|= \"xdarwinx\"|" ${worksrcpath}/setup.py
+}
+
+destroot.destdir    --prefix=${destroot}${prefix}
+
+post-destroot {
+    xinstall -d ${destroot}${python.prefix}
+    system "mv ${destroot}${prefix}/lib ${destroot}${python.prefix}"
+    reinplace -W ${destroot}${prefix} "s|#!${python.prefix}/Resources/Python.app/Contents/MacOS/Python|#!/usr/bin/env python${python.branch}|g" bin/chirpw
+}
+
+notes "Mac OS specific tips from the web site (http://chirp.danplanet.com/projects/chirp/wiki/MacOS_Tips) are still applicable. The Application Security section can be skipped, however, since we are not running a Mac app."
