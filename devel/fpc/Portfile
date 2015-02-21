@@ -151,3 +151,7 @@ proc getrtlpath {option} {
         append fpc.rtlpath " ${option}${workpath}/${worksrcdir}/rtl/units/${unitdir}"
     }
 }
+
+livecheck.type      regex
+livecheck.url       http://sourceforge.net/projects/freepascal/rss?path=/source
+livecheck.regex     "/fpcbuild-(\\d+(?:\\.\\d+)*)${extract.suffix}"
