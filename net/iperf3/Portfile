@@ -28,15 +28,18 @@ checksums           rmd160  eb371c0879fad6f2068a279704d637123bbd9162 \
 subport ${name}-devel {
     PortGroup           github 1.0
 
-    github.setup        esnet iperf 6bd4e258d0440e036e8780528e2d5aacdaaba6b2
-    version             20150114
+    github.setup        esnet iperf 25eb62c7cddc86cb42c6802841b3a8202511cad0
+    version             20150521
     fetch.type          git
 
     conflicts           ${name}
+}
 
+if {${name} == ${subport}} {
+    livecheck.url       ${master_sites}
+    livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
+    livecheck.type      regex
+} else {
     livecheck.type      none
 }
 
-livecheck.url       ${master_sites}
-livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
-livecheck.type      regex
