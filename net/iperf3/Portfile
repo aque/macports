@@ -37,7 +37,7 @@ subport ${name}-devel {
 
 if {${name} == ${subport}} {
     livecheck.url       ${master_sites}
-    livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
+    livecheck.regex     {iperf-(\d+(?:\.\d+)*(?!b))}
     livecheck.type      regex
 } else {
     livecheck.type      none

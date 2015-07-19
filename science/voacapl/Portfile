@@ -20,7 +20,7 @@ checksums           rmd160  c58ba093719112f7f257d9484f090d674300300d \
                     sha256  7dc592f18562b0b27840adf81ea38db213716b1fd52a89e2c87dc39373c82ac8
 
 set gcc_versions {4.3 4.4 4.5 4.6 4.7 4.8 4.9}
-set default_fortran_variant +gcc48
+set default_fortran_variant +gcc49
 set g95_conflicts {}
 
 foreach ver ${gcc_versions} {
