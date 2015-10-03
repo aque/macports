@@ -4,7 +4,7 @@
 PortSystem          1.0
 
 name                voacapl
-version             0.6.5
+version             0.6.7
 categories          science
 platforms           darwin
 license             Permissive
@@ -16,8 +16,8 @@ long_description    Voice of America Coverage Analysis Program - free profession
 homepage            http://www.voacap.com
 master_sites        http://www.qsl.net/hz1jw/voacapl/downloads/
 
-checksums           rmd160  c58ba093719112f7f257d9484f090d674300300d \
-                    sha256  7dc592f18562b0b27840adf81ea38db213716b1fd52a89e2c87dc39373c82ac8
+checksums           rmd160  f882ff16cbc61431ec5450d093f444e47e918b74 \
+                    sha256  a55afe8d10728573b147dfd6e73dc87a1e81d281c60547f5a800a2220e699278
 
 set gcc_versions {4.3 4.4 4.5 4.6 4.7 4.8 4.9}
 set default_fortran_variant +gcc49

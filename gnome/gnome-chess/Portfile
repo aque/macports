@@ -2,6 +2,7 @@
 # $Id$
 
 PortSystem          1.0
+PortGroup           perl5 1.0
 
 name                gnome-chess
 categories          gnome games
@@ -13,19 +14,20 @@ long_description    GNOME Chess is a 2D/3D chess game, where games can be played
                     of human and computer players. GNOME Chess detects known third party chess engines.
 homepage            https://wiki.gnome.org/Apps/Chess
 
-version             3.16.2
+version             3.18.0
 
-set branch          [join [lrange [split ${version} .] 0 1] .]
-master_sites        gnome:sources/${name}/${branch}
+set perl5.branch    [join [lrange [split ${perl5.version} .] 0 1] .]
+set name.branch     [join [lrange [split ${version} .] 0 1] .]
+master_sites        gnome:sources/${name}/${name.branch}
 
-checksums           rmd160  9c789ead530b9855836bab60c77a39e558db9ff1 \
-                    sha256  8f73b4c645a86e775d092b5b334c70d0868953c1a26cac9d5a234e5f83db3b48
+checksums           rmd160  2b30efcf1bcec6eb97d0bf90203b5470688df86c \
+                    sha256  c841198935d807618c3cecbf10ed24643390d504e17961717bac455f4e1b37ad
 
 use_xz              yes
 
-depends_build       port:automake \
-                    port:autoconf \
-                    port:intltool \
+# ensure that the selected perl5 port has xml-parser
+depends_build       port:intltool \
+                    port:p${perl5.branch}-xml-parser \
                     port:pkgconfig \
                     port:itstool \
                     port:yelp-tools \
@@ -38,9 +40,6 @@ depends_run         port:adwaita-icon-theme \
                     port:gnome-icon-theme \
                     port:gnome-icon-theme-symbolic \
                     port:gnuchess
-
-use_autoconf        yes
-autoconf.cmd        ./autogen.sh
 
 post-activate {
     catch {system "${prefix}/bin/scrollkeeper-update"}

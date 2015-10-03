@@ -2,6 +2,7 @@
 # $Id$
 
 PortSystem          1.0
+PortGroup           perl5 1.0
 
 name                gnome-mahjongg
 categories          gnome games
@@ -12,19 +13,20 @@ description         Solitaire (one player) version of the classic Eastern tile g
 long_description    ${description}
 homepage            https://wiki.gnome.org/Apps/Mahjongg
 
-version             3.16.1
+version             3.18.0
 
-set branch          [join [lrange [split ${version} .] 0 1] .]
-master_sites        gnome:sources/${name}/${branch}
+set perl5.branch    [join [lrange [split ${perl5.version} .] 0 1] .]
+set name.branch     [join [lrange [split ${version} .] 0 1] .]
+master_sites        gnome:sources/${name}/${name.branch}
 
-checksums           rmd160  30d93d86cca4c3e779b4d41378bcd97cf03963dd \
-                    sha256  f2c607875402649182bd819bedd8cd8496539aca2aea9eb432c3e15ed71b6dc9
+checksums           rmd160  e97a75de3f2fa96f0cde831bf6720908199657b5 \
+                    sha256  7034428f5ac04bfd90689ee66894a6948a2ff1bfa2d2548f7559d2134b967405
 
 use_xz              yes
 
-depends_build       port:automake \
-                    port:autoconf \
-                    port:intltool \
+# ensure that the selected perl5 has the xml-parser for intltool
+depends_build       port:intltool \
+                    port:p${perl5.branch}-xml-parser \
                     port:pkgconfig \
                     port:itstool \
                     port:yelp-tools \
