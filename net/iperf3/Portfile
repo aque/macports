@@ -4,7 +4,7 @@
 PortSystem          1.0
 
 name                iperf3
-version             3.0.11
+version             3.1.1
 categories          net
 platforms           darwin
 license             bsd
@@ -22,14 +22,14 @@ distname            iperf-${version}
 
 conflicts           ${name}-devel
 
-checksums           rmd160  eb371c0879fad6f2068a279704d637123bbd9162 \
-                    sha256  e01db5be6f47f67c987463095fe4f5b8b9ff891fb92c39104d042ad8fde97f6e
+checksums           rmd160  ffba5efe31fa42fd271a28173ff6c70691b3af0c \
+                    sha256  62f7c64eafe19046ba974b3ef2d962a5597194d6fbbddde328a15a5e74110564
 
 subport ${name}-devel {
     PortGroup           github 1.0
 
-    github.setup        esnet iperf 25eb62c7cddc86cb42c6802841b3a8202511cad0
-    version             20150521
+    github.setup        esnet iperf c50b5ea849ca07ca3d27d46dcb200f67ba7e6b81
+    version             20151215
     fetch.type          git
 
     conflicts           ${name}
