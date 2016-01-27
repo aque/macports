@@ -4,7 +4,7 @@
 PortSystem          1.0
 
 name                pythonprop
-version             0.17
+version             0.18
 categories          python science
 platforms           darwin
 license             GPL-2
@@ -15,11 +15,11 @@ long_description    pythonProp is a collection of Python scripts designed to wor
                     User Interface and plot output files.
 homepage            http://www.qsl.net/h/hz1jw/pythonprop
 
-master_sites        sourceforge:pythonprop
+master_sites        http://www.qsl.net/h/hz1jw//pythonprop/downloads
 distname            ${name}-${version}
 
-checksums           rmd160  6386bce496609ec54ef918e45014558d3ff312c9 \
-                    sha256  5a9e803f2b42b4206becefaec663b6e7c872dc753c1a443eae1b101f98221dff
+checksums           rmd160  e85ac3e39483675d9a8eca6f5fd318780f73fe6c \
+                    sha256  51689ce55a73ad4568c34ea882ce0e1dcae9364aa9628804256b31d33163f048
 
 variant python26 conflicts python27 description {Use python 2.6} {}
 
@@ -45,7 +45,7 @@ depends_lib         port:gnome-doc-utils \
                     port:py-matplotlib-basemap
 
 depends_run         port:adwaita-icon-theme \
-                    port:gnome-icon-theme \
+                    port:gnome-themes-standard \
                     port:gnome-icon-theme-symbolic \
                     port:gtk3 \
                     port:py${python.version}-dateutil \
