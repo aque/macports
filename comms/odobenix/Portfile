@@ -1,0 +1,42 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        fwisard odobenix 1.2.0
+github.tarball_from releases
+
+name                odobenix
+categories          comms
+platforms           darwin
+license             GPL
+maintainers         gmail.com:allan.que openmaintainer
+description         A suite of utilities and games to improve morse code skills.
+long_description    ${description}
+homepage            https://github.com/fwisard/odobenix
+
+checksums           rmd160  e4c64646ea03a8ad4c709f8c6ffcf059ae339da9 \
+                    sha256  e9f27fc06f376fc7730f0a73ec8446086ba372ca562196eb67b04499bdd2a4f8
+
+depends_build       port:pulseaudio
+depends_run         port:python35
+
+use_configure       no
+
+set python.branch   3.5
+set installdir      "${prefix}/bin"
+build.env-append    DESTDIR="${installdir}"
+
+patch {
+    reinplace "s|=\'./cw\'|=\'${prefix}/bin/cw\'|g" ${worksrcpath}/kochwords
+    reinplace "s|env python|env python${python.branch}|g" ${worksrcpath}/kochwords
+    reinplace "s|=\'./cw\'|=\'${prefix}/bin/cw\'|g" ${worksrcpath}/morsechef
+    reinplace "s|env python|env python${python.branch}|g" ${worksrcpath}/morsechef
+}
+
+destroot {
+    foreach f {cw kochwords morsechef twila} {
+        copy ${worksrcpath}/${f} ${destroot}${installdir}
+    }
+}
