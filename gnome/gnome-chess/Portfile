@@ -38,7 +38,6 @@ depends_lib         port:gnome-common \
 
 depends_run         port:adwaita-icon-theme \
                     port:gnome-themes-standard \
-                    port:gnome-icon-theme-symbolic \
                     port:gnuchess
 
 post-activate {

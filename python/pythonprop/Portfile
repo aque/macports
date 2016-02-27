@@ -46,7 +46,6 @@ depends_lib         port:gnome-doc-utils \
 
 depends_run         port:adwaita-icon-theme \
                     port:gnome-themes-standard \
-                    port:gnome-icon-theme-symbolic \
                     port:gtk3 \
                     port:py${python.version}-dateutil \
                     port:py${python.version}-gobject3 \
