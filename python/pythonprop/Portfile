@@ -2,9 +2,10 @@
 # $Id$
 
 PortSystem          1.0
+PortGroup           github 1.0
 
 name                pythonprop
-version             0.18
+version             0.21
 categories          python science
 platforms           darwin
 license             GPL-2
@@ -15,74 +16,47 @@ long_description    pythonProp is a collection of Python scripts designed to wor
                     User Interface and plot output files.
 homepage            http://www.qsl.net/h/hz1jw/pythonprop
 
-master_sites        http://www.qsl.net/h/hz1jw//pythonprop/downloads
-distname            ${name}-${version}
+github.setup        jawatson pythonprop 0.21 v
 
-checksums           rmd160  e85ac3e39483675d9a8eca6f5fd318780f73fe6c \
-                    sha256  51689ce55a73ad4568c34ea882ce0e1dcae9364aa9628804256b31d33163f048
+checksums           rmd160  eafb2a4dbb498274523ec96476bc6beab803ca42 \
+                    sha256  d6c6f604b973bf5371fbcc34c86a11332cf9bc51bfa7cd6c0d4921b74e72dc4d
 
-variant python26 conflicts python27 description {Use python 2.6} {}
+variant python34 conflicts python35 description {Use python 3.4} {}
 
-variant python27 conflicts python26 description {Use python 2.7} {}
+variant python35 conflicts python34 description {Use python 3.5} {}
 
-if {![variant_isset python26] && ![variant_isset python27]} {
-    default_variants-append +python27
+if {![variant_isset python34] && ![variant_isset python35]} {
+    default_variants-append +python34
 }
 
-if {[variant_isset python26]} {
-    set python.branch       2.6
-    set python.version      26
-    depends_lib-append      port:python26
-} elseif {[variant_isset python27]} {
-    set python.branch       2.7
-    set python.version      27
-    depends_lib-append      port:python27
+if {[variant_isset python34]} {
+    set python.version  34
+    set python.branch   3.4
+} elseif {[variant_isset python35]} {
+    set python.version  35
+    set python.branch   3.5
 }
 
-depends_build       port:pkgconfig
+depends_build       port:dblatex
 
 depends_lib         port:gnome-doc-utils \
-                    port:py-matplotlib-basemap
+                    port:py${python.version}-pip \
+                    port:py${python.version}-matplotlib-basemap \
+                    port:py${python.version}-gobject3
 
 depends_run         port:adwaita-icon-theme \
                     port:gnome-themes-standard \
-                    port:gtk3 \
-                    port:py${python.version}-dateutil \
-                    port:py${python.version}-gobject3 \
-                    port:py${python.version}-matplotlib-basemap \
-                    port:xorg-libX11 \
+                    port:yelp \
                     port:voacapl
 
-set python.prefix       ${frameworks_dir}/Python.framework/Versions/${python.branch}
-set python.bin          ${python.prefix}/bin/python${python.branch}
-set python.packages     ${python.prefix}/lib/python${python.branch}/site-packages
+use_configure       yes
+use_autoconf        yes
+autoconf.cmd        ./autogen.sh
 
-configure.pkg_config_path   ${python.prefix}/lib/pkgconfig
-
-pre-configure {
-    # move python site-packages out from under ${prefix}
-    reinplace "s|pyexecdir=\$am_cv_python_pyexecdir|pyexecdir=${python.packages}|g" ${worksrcpath}/configure
-    reinplace "s|pythondir=\$am_cv_python_pythondir|pythondir=${python.packages}|g" ${worksrcpath}/configure
+post-activate {
+    # requires cairocffi to generate graphs
+    catch {system "pip-${python.branch} install cairocffi"}
 }
 
-pre-destroot {
-    system -W ${worksrcpath} "chmod 0755 install-sh"
-}
+livecheck.type      none
 
-post-destroot {
-    # use the python variant instead of the system default
-    reinplace "s|#!/usr/bin/env python|#!/usr/bin/env python${python.branch}|g" \
-        ${destroot}${prefix}/bin/voa3DPlot \
-        ${destroot}${prefix}/bin/voaAreaPlot \
-        ${destroot}${prefix}/bin/voaAreaPlotgui \
-        ${destroot}${prefix}/bin/voaP2PPlot \
-        ${destroot}${prefix}/bin/voaP2PPlotgui \
-        ${destroot}${prefix}/bin/voaP2PPlotServer \
-        ${destroot}${prefix}/bin/voacapgui
-}
-
-#livecheck.type      sourceforge
-livecheck.type      regex
-livecheck.url       http://sourceforge.net/projects/${name}/rss
-#livecheck.regex     "/files/${name}-(\[0-9\]+\\.\[0-9.\]+)${extract.suffix}"
-livecheck.regex     "/[quotemeta ${name}]-(\\d+(?:\\.\\d+)*)${extract.suffix}"
