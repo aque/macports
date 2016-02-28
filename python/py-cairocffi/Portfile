@@ -1,0 +1,40 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-cairocffi
+version             0.7.2
+categories-append   devel
+platforms           darwin
+license             Permissive
+
+python.versions     26 27 33 34 35
+
+maintainers         gmail.com:allan.que openmaintainer
+
+description         CFFI-based drop-in replacement for Pycairo
+
+long_description    ${name} s a CFFI-based drop-in replacement for Pycairo, \
+                    a set of Python bindings and object-oriented API for cairo.
+
+homepage            https://pythonhosted.org/cairocffi/
+master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
+
+distname            cairocffi-${version}
+
+checksums           rmd160  e57036784d3444b7132fd3c2e732a29ad0286d20 \
+                    sha256  e42b4256d27bd960cbf3b91a6c55d602defcdbc2a73f7317849c80279feeb975
+
+if {${name} ne ${subport}} {
+    depends_build-append \
+                        port:py${python.version}-setuptools
+                        
+    depends_run-append  port:py${python.version}-cffi
+
+    livecheck.type      none
+} else {
+    livecheck.type      pypi
+}
+

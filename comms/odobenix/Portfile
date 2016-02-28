@@ -25,18 +25,18 @@ depends_run         port:python35
 use_configure       no
 
 set python.branch   3.5
-set installdir      "${prefix}/bin"
+set installdir      ${prefix}/bin
 build.env-append    DESTDIR="${installdir}"
 
 patch {
-    reinplace "s|=\'./cw\'|=\'${prefix}/bin/cw\'|g" ${worksrcpath}/kochwords
-    reinplace "s|env python|env python${python.branch}|g" ${worksrcpath}/kochwords
-    reinplace "s|=\'./cw\'|=\'${prefix}/bin/cw\'|g" ${worksrcpath}/morsechef
-    reinplace "s|env python|env python${python.branch}|g" ${worksrcpath}/morsechef
+    reinplace "s|=\'./cw\'|=\'${prefix}/bin/cw\'|g" ${worksrcpath}/kochwords \
+        ${worksrcpath}/morsechef ${worksrcpath}/twila
+    reinplace "s|env python|env python${python.branch}|g" ${worksrcpath}/kochwords \
+        ${worksrcpath}/morsechef ${worksrcpath}/twila
 }
 
 destroot {
     foreach f {cw kochwords morsechef twila} {
-        copy ${worksrcpath}/${f} ${destroot}${installdir}
+        xinstall -m 755 ${worksrcpath}/${f} ${destroot}${installdir}
     }
 }

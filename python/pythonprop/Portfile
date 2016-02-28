@@ -16,7 +16,7 @@ long_description    pythonProp is a collection of Python scripts designed to wor
                     User Interface and plot output files.
 homepage            http://www.qsl.net/h/hz1jw/pythonprop
 
-github.setup        jawatson pythonprop 0.21 v
+github.setup        jawatson pythonprop ${version} v
 
 checksums           rmd160  eafb2a4dbb498274523ec96476bc6beab803ca42 \
                     sha256  d6c6f604b973bf5371fbcc34c86a11332cf9bc51bfa7cd6c0d4921b74e72dc4d
@@ -42,7 +42,8 @@ depends_build       port:dblatex
 depends_lib         port:gnome-doc-utils \
                     port:py${python.version}-pip \
                     port:py${python.version}-matplotlib-basemap \
-                    port:py${python.version}-gobject3
+                    port:py${python.version}-gobject3 \
+                    port:py${python.version}-cairocffi
 
 depends_run         port:adwaita-icon-theme \
                     port:gnome-themes-standard \
@@ -51,12 +52,6 @@ depends_run         port:adwaita-icon-theme \
 
 use_configure       yes
 use_autoconf        yes
-autoconf.cmd        ./autogen.sh
+autoconf.cmd        ${worksrcpath}/autogen.sh
 
-post-activate {
-    # requires cairocffi to generate graphs
-    catch {system "pip-${python.branch} install cairocffi"}
-}
-
-livecheck.type      none
 
