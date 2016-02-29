@@ -9,7 +9,7 @@ github.setup        fwisard odobenix 1.2.1
 name                odobenix
 categories          comms python
 platforms           darwin
-license             GPL
+license             GPL-2
 maintainers         gmail.com:allan.que openmaintainer
 description         A suite of utilities and games to improve morse code skills.
 long_description    ${description}
