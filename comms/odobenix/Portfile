@@ -4,11 +4,10 @@
 PortSystem          1.0
 PortGroup           github 1.0
 
-github.setup        fwisard odobenix 1.2.0
-github.tarball_from releases
+github.setup        fwisard odobenix 1.2.1
 
 name                odobenix
-categories          comms
+categories          comms python
 platforms           darwin
 license             GPL
 maintainers         gmail.com:allan.que openmaintainer
@@ -16,8 +15,8 @@ description         A suite of utilities and games to improve morse code skills.
 long_description    ${description}
 homepage            https://github.com/fwisard/odobenix
 
-checksums           rmd160  e4c64646ea03a8ad4c709f8c6ffcf059ae339da9 \
-                    sha256  e9f27fc06f376fc7730f0a73ec8446086ba372ca562196eb67b04499bdd2a4f8
+checksums           rmd160  e6414bf46e805397b4324455189269ab5bf544e9 \
+                    sha256  ffa8996e5395f55c4ae28f31355aedddb30192f084c41ac1ea0eefc91113a45f
 
 depends_build       port:pulseaudio
 depends_run         port:python35
@@ -29,8 +28,8 @@ set installdir      ${prefix}/bin
 build.env-append    DESTDIR="${installdir}"
 
 patch {
-    reinplace "s|=\'./cw\'|=\'${prefix}/bin/cw\'|g" ${worksrcpath}/kochwords \
-        ${worksrcpath}/morsechef ${worksrcpath}/twila
+    reinplace "s|./cw|${prefix}/bin/cw|g" ${worksrcpath}/kochwords \
+        ${worksrcpath}/morsechef ${worksrcpath}/twila ${worksrcpath}/odobenixrc
     reinplace "s|env python|env python${python.branch}|g" ${worksrcpath}/kochwords \
         ${worksrcpath}/morsechef ${worksrcpath}/twila
 }
@@ -39,4 +38,13 @@ destroot {
     foreach f {cw kochwords morsechef twila} {
         xinstall -m 755 ${worksrcpath}/${f} ${destroot}${installdir}
     }
+
+    set docdir ${prefix}/share/doc/${subport}
+
+    # copy default config file to doc directory
+    xinstall -d ${destroot}${docdir}
+    xinstall -m 644 ${worksrcpath}/odobenixrc ${destroot}${docdir}
 }
+
+notes "Copy ${prefix}/share/doc/${subport}/odobenixrc to ~/.odobenixrc and edit as desired."
+
