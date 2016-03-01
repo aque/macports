@@ -2,9 +2,10 @@
 # $Id$
 
 PortSystem          1.0
+PortGroup           github 1.0
 
 name                iperf3
-version             3.1.1
+version             3.1.2
 categories          net
 platforms           darwin
 license             bsd
@@ -17,29 +18,17 @@ long_description    ${name} is a tool for active measurements of the maximum \
                     and other parameters.
 homepage            https://github.com/esnet/iperf
 
-master_sites        http://downloads.es.net/pub/iperf
-distname            iperf-${version}
+github.setup        esnet iperf ${version}
 
 conflicts           ${name}-devel
 
-checksums           rmd160  ffba5efe31fa42fd271a28173ff6c70691b3af0c \
-                    sha256  62f7c64eafe19046ba974b3ef2d962a5597194d6fbbddde328a15a5e74110564
+checksums           rmd160  646a6fc71534b0deda3d03819bbbf0bfd2ec7721 \
+                    sha256  3b32d2110094305908e43f265d6f5409122b4e727c462f5990e5bd519b0897db
 
 subport ${name}-devel {
-    PortGroup           github 1.0
-
-    github.setup        esnet iperf c50b5ea849ca07ca3d27d46dcb200f67ba7e6b81
-    version             20151215
-    fetch.type          git
+    github.setup        esnet iperf fab327943f2edc34cced87f0114424ebd3070a15
+    version             20160201
 
     conflicts           ${name}
-}
-
-if {${name} == ${subport}} {
-    livecheck.url       ${master_sites}
-    livecheck.regex     {iperf-(\d+(?:\.\d+)*(?!b))}
-    livecheck.type      regex
-} else {
-    livecheck.type      none
 }
 
