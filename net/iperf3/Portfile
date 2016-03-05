@@ -29,6 +29,9 @@ subport ${name}-devel {
     github.setup        esnet iperf fab327943f2edc34cced87f0114424ebd3070a15
     version             20160201
 
+    checksums           rmd160  900039a9c39b1ac6771678af8884ea773965748b \
+                        sha256  9446287ce53f163149b8ab5ce4b3c4200b8b59f9b1dcc25e208ff3bd0013f8a6
+
     conflicts           ${name}
 }
 
