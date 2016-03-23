@@ -33,5 +33,7 @@ subport ${name}-devel {
                         sha256  9446287ce53f163149b8ab5ce4b3c4200b8b59f9b1dcc25e208ff3bd0013f8a6
 
     conflicts           ${name}
+
+    livecheck.type      none
 }
 
