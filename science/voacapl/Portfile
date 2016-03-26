@@ -2,6 +2,7 @@
 # $Id$
 
 PortSystem          1.0
+PortGroup           compilers 1.0
 
 name                voacapl
 version             0.6.7
@@ -19,73 +20,8 @@ master_sites        http://www.qsl.net/hz1jw/voacapl/downloads/
 checksums           rmd160  f882ff16cbc61431ec5450d093f444e47e918b74 \
                     sha256  a55afe8d10728573b147dfd6e73dc87a1e81d281c60547f5a800a2220e699278
 
-set gcc_versions {4.3 4.4 4.5 4.6 4.7 4.8 4.9}
-set default_fortran_variant +gcc49
-set g95_conflicts {}
-
-foreach ver ${gcc_versions} {
-    set ver_no_dot [join [split ${ver} "."] ""]
-
-    set variant_line { \
-        variant gcc${ver_no_dot} \
-        description "build with gfortran from gcc${ver_no_dot}" \
-        conflicts g95 \
-    }
-
-    foreach over ${gcc_versions} {
-        if {${ver} == ${over}} {
-            continue
-        }
-
-        set over_no_dot [join [split ${over} "."] ""]
-        append variant_line " conflicts gcc${over_no_dot}"
-    }
-    append variant_line { {}}
-
-    eval $variant_line
-
-    append g95_conflicts " conflicts gcc${ver_no_dot}"
-
-    if {[variant_isset gcc${ver_no_dot}]} {
-        if {${default_fortran_variant} != "+gcc${ver_no_dot}"} {
-            set default_fortran_variant ""
-        }
-    }
-}
-
-eval [concat {variant g95 description {build with g95}} $g95_conflicts {{}}]
-
-if {[variant_isset g95]} {
-    if {${default_fortran_variant} != "+g95"} {
-        set default_fortran_variant ""
-    }
-}
-
-if {${default_fortran_variant} != ""} {
-    default_variants-append "${default_fortran_variant}"
-}
-
-foreach ver ${gcc_versions} {
-    set ver_no_dot [join [split ${ver} "."] ""]
-
-    if {[variant_isset gcc${ver_no_dot}]} {
-        depends_lib-append path:lib/libgcc/libgcc_s.1.dylib:libgcc
-        depends_build-append port:gcc${ver_no_dot}
-
-        configure.fc  ${prefix}/bin/gfortran-mp-${ver}
-        configure.f77 ${prefix}/bin/gfortran-mp-${ver}
-        configure.f90 ${prefix}/bin/gfortran-mp-${ver}
-    }
-}
-
-if {[variant_isset g95]} {
-    depends_lib-append path:lib/libgcc/libgcc_s.1.dylib:libgcc
-    depends_build-append port:g95
-
-    configure.fc ${prefix}/bin/g95
-    configure.f77 ${prefix}/bin/g95
-    configure.f90 ${prefix}/bin/g95
-}
+compilers.choose    f77
+compilers.setup     require_fortran
 
 patch {
     reinplace "s|echo \$SRC_ROOT_DIR||" ${worksrcpath}/makeitshfbc
@@ -99,5 +35,4 @@ post-configure {
         ${worksrcpath}/Makefile
 }
 
-notes "Run \'makeitshfbc\' to create the itshfbc directory structure\
-    in your home directory."
+notes "Run \'makeitshfbc\' to create the ~/itshfbc directory structure."
