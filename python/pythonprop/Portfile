@@ -2,24 +2,23 @@
 # $Id$
 
 PortSystem          1.0
-PortGroup           github 1.0
 
 name                pythonprop
-version             0.21
 categories          python science
 platforms           darwin
-license             GPL-2
+license             GPL-3
 maintainers         gmail.com:allan.que openmaintainer
-description         python scripts designed to work with voacap
-long_description    pythonProp is a collection of Python scripts designed to work \
+description         python scripts designed to work with voacap to model radio \
+                    propagation
+long_description    ${name} is a collection of Python scripts designed to work \
                     with VOACAP, allowing users to create input files using a Graphical \
-                    User Interface and plot output files.
+                    User Interface and plot output files used for modeling radio \
+                    propagation to predict point-to-point path loss and coverage.
 homepage            http://www.qsl.net/h/hz1jw/pythonprop
 
-github.setup        jawatson pythonprop ${version} v
-
-checksums           rmd160  eafb2a4dbb498274523ec96476bc6beab803ca42 \
-                    sha256  d6c6f604b973bf5371fbcc34c86a11332cf9bc51bfa7cd6c0d4921b74e72dc4d
+version             0.22
+revision            0
+conflicts           ${name}-devel
 
 variant python34 conflicts python35 description {Use python 3.4} {}
 
@@ -37,7 +36,8 @@ if {[variant_isset python34]} {
     set python.branch   3.5
 }
 
-depends_build       port:dblatex
+checksums           rmd160  c83323c27f04d6a8b5760cc3b1fb8d77a6f5be2f \
+                    sha256  cd06c766deee73fa0a4817b3868d029daa2ac486eabc926fb9b9d7a79214fbf5
 
 depends_lib         port:gnome-doc-utils \
                     port:py${python.version}-pip \
@@ -50,8 +50,42 @@ depends_run         port:adwaita-icon-theme \
                     port:yelp \
                     port:voacapl
 
-use_configure       yes
-use_autoconf        yes
-autoconf.cmd        ${worksrcpath}/autogen.sh
+build.target        {}
 
+subport ${name}-devel {
+    PortGroup           github 1.0
+    github.setup        jawatson pythonprop d498639a41443cc18001ad92843238b7260f1947
+    version             201600327
+    conflicts           ${name}
+
+    variant builddoc description {Build the .pdf doc - requires dblatex} {
+        depends_build-append    port:dblatex
+    }
+
+    checksums           rmd160  84969f1fe2acb7dd79dc31b1ded304485a6c11cb \
+                        sha256  d7549159451b95f49772887704ead19c2894ae20210224799024ee705f000996
+
+    use_autoconf        yes
+    autoconf.cmd        ${worksrcpath}/autogen.sh
+}
+
+if {${name} eq ${subport}} {
+    master_sites        http://www.qsl.net/hz1jw/pythonprop/downloads
+}
+
+patch {
+    if {${name} ne ${subport} && ![variant_isset builddoc]} {
+        # comment out pdf document building in Makefile.am
+        reinplace -W ${worksrcpath}/docs/user/help "s+^pdf_DATA+#pdf_DATA+g" Makefile.am
+        reinplace -W ${worksrcpath}/docs/user/help "s+^voacapgui.pdf:+#voacapgui.pdf:+g" Makefile.am
+        reinplace -W ${worksrcpath}/docs/user/help "s+^	dblatex C+#	dblatex C+g" Makefile.am
+    }
+}
+
+post-activate {
+    catch {system "${prefix}/bin/scrollkeeper-update"}
+    catch {system "${prefix}/bin/update-desktop-database ${prefix}/share/applications"}
+    catch {system "${prefix}/bin/gtk-update-icon-cache -f -t ${prefix}/share/icons/hicolor"}
+    catch {system "${prefix}/bin/glib-compile-schemas ${prefix}/share/glib-2.0/schemas"}
+}
 
