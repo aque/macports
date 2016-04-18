@@ -1,0 +1,32 @@
+--- d_rats/mainwindow.py	2016-04-17 13:18:02.000000000 -0500
++++ d_rats/mainwindow.py	2016-04-17 14:49:23.000000000 -0500
+@@ -163,10 +163,7 @@
+                 self.emit("user-send-chat", "CQCQCQ", port, "?D*%s?" % d, True)
+ 
+         def do_proxy(but):
+-            if sys.platform != "darwin":
+-                args = []
+-            else:
+-                args = [sys.executable]
++            args = []
+             if os.path.exists("./d-rats_repeater"):
+                 args.append("./d-rats_repeater")
+             else:
+@@ -188,7 +185,7 @@
+ 
+         menu_map = self._wtree.get_widget("main_menu_map")
+         img = gtk.Image()
+-        img.set_from_file("images/map.png")
++        img.set_from_file("APPSHARE/images/map.png")
+         menu_map.set_image(img)
+         menu_map.connect("activate", do_map)
+ 
+@@ -197,7 +194,7 @@
+ 
+         ping = self._wtree.get_widget("main_menu_ping")
+         img = gtk.Image()
+-        img.set_from_file("images/event_ping.png")
++        img.set_from_file("APPSHARE/images/event_ping.png")
+         ping.set_image(img)
+         ping.connect("activate", do_ping)
+ 

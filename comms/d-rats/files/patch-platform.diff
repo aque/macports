@@ -1,0 +1,31 @@
+--- d_rats/platform.py	2016-04-17 11:05:09.000000000 -0500
++++ d_rats/platform.py	2016-04-17 15:12:25.000000000 -0500
+@@ -268,7 +268,7 @@
+             print "Forcing DISPLAY for MacOS"
+             os.environ["DISPLAY"] = ":0"
+ 
+-        os.environ["PANGO_RC_FILE"] = "../Resources/etc/pango/pangorc"
++        os.environ["PANGO_RC_FILE"] = "PREFIX/etc/pango/pangorc"
+ 
+         UnixPlatform.__init__(self, basepath)
+ 
+@@ -276,8 +276,8 @@
+         self._unix_doublefork_run("open", path)
+ 
+     def open_text_file(self, path):
+-        macos_textedit = "/Applications/TextEdit.app/Contents/MacOS/TextEdit"
+-        self._unix_doublefork_run(macos_textedit, path)
++        macos_textedit = "/usr/bin/open"
++        self._unix_doublefork_run(macos_textedit, "-e", path)
+ 
+     def list_serial_ports(self):
+         keyspan = glob.glob("/dev/cu.KeySerial*")
+@@ -290,7 +290,7 @@
+ 
+     def source_dir(self):
+         if "site-packages" in find_me():
+-            return "../Resources"
++            return "APPSHARE"
+         else:
+             return self._source_dir
+ 

@@ -1,0 +1,51 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                d-rats
+categories          comms python
+platforms           darwin
+license             GPL-2
+maintainers         gmail.com:allan.que openmaintainer
+description         A low speed data communications tool for D-STAR radios
+long_description    D-RATS is a communications tool that allows stations to \
+                    communicate via D-STAR radios using low speed data (DV \
+                    data mode), Packet Radio and the Internet. D-RATS also \
+                    provides for transferring of files and forwarding of \
+                    messages from one user to another, automatically. D-RATS \
+                    works as a message hub, allowing seamless transfers from \
+                    one port to another.
+version             0.3.3
+homepage            http://www.d-rats.com/
+
+python.versions     26 27
+
+set download.dir    [join [lrange [split ${version} .] 0 1] .]
+master_sites        http://d-rats.danplanet.com/download/v${download.dir}.x
+
+variant aspell description {install spell checker} {
+    depends_run-append  port:aspell
+}
+
+checksums           rmd160  d37d611a0850c23f10c7db5ea0fc185d25abd1c5 \
+                    sha256  ab0aa371f25777fc0ab8c131f6fa43df2c5f4b18c4e5693d21c979bebcf724b9
+
+depends_build-append \
+                    port:py${python.version}-setuptools \
+                    port:py${python.version}-serial \
+                    port:py${python.version}-libxslt \
+                    port:cairo \
+                    port:pango \
+
+patchfiles          patch-mainwindow.diff \
+                    patch-platform.diff
+
+post-patch {
+    reinplace -W ${worksrcpath} "s+darwin+xdarwinx+g" setup.py
+    reinplace -W ${worksrcpath} "s+/usr/share/+${prefix}/share/+g" setup.py
+    reinplace -W ${worksrcpath}/d_rats "s+APPSHARE+${prefix}/share/${name}+g" mainwindow.py platform.py
+    reinplace -W ${worksrcpath}/d_rats "s+PREFIX+${prefix}+g" platform.py
+}
+
