@@ -13,14 +13,14 @@ description         Solitaire (one player) version of the classic Eastern tile g
 long_description    ${description}
 homepage            https://wiki.gnome.org/Apps/Mahjongg
 
-version             3.18.0
+version             3.20.0
 
 set perl5.branch    [join [lrange [split ${perl5.version} .] 0 1] .]
 set name.branch     [join [lrange [split ${version} .] 0 1] .]
 master_sites        gnome:sources/${name}/${name.branch}
 
-checksums           rmd160  e97a75de3f2fa96f0cde831bf6720908199657b5 \
-                    sha256  7034428f5ac04bfd90689ee66894a6948a2ff1bfa2d2548f7559d2134b967405
+checksums           rmd160  614d932593647ee25643ae13a462f850c5261959 \
+                    sha256  d09bb1923636dfd05b6f3a5af8d6fe7b6daa1434e2c06188dd27c96a61cea00a
 
 use_xz              yes
 
