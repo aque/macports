@@ -55,7 +55,7 @@ build.target        {}
 subport ${name}-devel {
     PortGroup           github 1.0
     github.setup        jawatson pythonprop d498639a41443cc18001ad92843238b7260f1947
-    version             201600327
+    version             20160327
     conflicts           ${name}
 
     variant builddoc description {Build the .pdf doc - requires dblatex} {
