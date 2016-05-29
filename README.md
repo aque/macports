@@ -20,6 +20,12 @@ This is a repository of MacPorts Portfiles I wrote. Some of them were submitted 
 
         $ sudo port install pythonprop
 
+## Accepted Ports ##
+
+The following ports have been accepted into Macports. They have been removed from this repository.
+
+* iperf3 - Measures the maximum achievable bandwidth on IP networks
+
 ## Bugs
 
 Please submit any issues to the [GitHub Issues tab](https://github.com/aque/macports/issues).
