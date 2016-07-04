@@ -22,7 +22,7 @@ long_description    ${name} s a CFFI-based drop-in replacement for Pycairo, \
 homepage            https://pythonhosted.org/cairocffi/
 master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
 
-distname            cairocffi-${version}
+distname            ${python.rootname}-${version}
 
 checksums           rmd160  e57036784d3444b7132fd3c2e732a29ad0286d20 \
                     sha256  e42b4256d27bd960cbf3b91a6c55d602defcdbc2a73f7317849c80279feeb975

@@ -1,0 +1,43 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-ssdeep
+version             3.1.1
+categories-append   security
+platforms           darwin
+license             Permissive
+
+python.versions     26 27 33 34 35
+
+maintainers         gmail.com:allan.que openmaintainer
+
+description         Python wrapper for ssdeep for computing fuzzy hashes
+
+long_description    ${name} is a Python wrapper for ssdeep by Jesse Kornblum, \
+                    which is a library for computing context triggered \
+                    piecewise hashes (CTPH) or fuzzy hashes.
+
+homepage            https://github.com/DinoTools/python-ssdeep
+master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
+
+distname            ${python.rootname}-${version}
+
+checksums           rmd160  fb33b00f6db1ac833e217d2b608c79ff2f5d5ca2 \
+                    sha256  a6c66309e6b540d5c8ba08c018675dabaef2172f2cc6f6351b67395ba7bf2ddd
+
+if {${name} ne ${subport}} {
+    depends_build-append \
+                        port:py${python.version}-setuptools \
+                        port:ssdeep
+                        
+    depends_run-append  port:py${python.version}-cffi \
+                        port:py${python.version}-six
+
+    livecheck.type      none
+} else {
+    livecheck.type      pypi
+}
+

@@ -1,0 +1,50 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           python 1.0
+PortGroup           github 1.0
+
+name                dnsviz
+version             0.5.4
+categories-append   security sysutils net
+platforms           darwin
+license             GPL-2
+maintainers         gmail.com:allan.que openmaintainer
+description         ${name} is a tool suite for analysis and visualization of Domain \
+                    Name System (DNS) behavior
+long_description    ${name} is a tool suite for analysis and visualization of Domain \
+                    Name System (DNS) behavior, including its security extensions \
+                    (DNSSEC). This tool suite powers the Web-based analysis \
+                    available at http://dnsviz.net/.
+
+homepage            http://dnsviz.net/
+
+conflicts           ${name}-devel
+
+github.setup        dnsviz dnsviz ${version} v
+
+checksums           rmd160  4e9d7849735e281e5b647b0f831da34088d42d09 \
+                    sha256  3c7f9a175b6c7f66ef78af37c6ce10afb68527f648864add7791c8f6d77d96a3
+
+python.default_version  27
+
+depends_lib-append  port:py${python.version}-dnspython \
+                    port:py${python.version}-pygraphviz \
+                    port:py${python.version}-m2crypto
+
+post-destroot {
+    # move man pages to correct location
+    xinstall -m 644 {*}[glob ${destroot}${python.prefix}/share/man/man1/*] \
+        ${destroot}${prefix}/share/man/man1
+    file delete -force ${destroot}${python.prefix}/share/man/man1
+}
+
+subport ${name}-devel {
+    github.setup    dnsviz dnsviz 4504db1998c04afb3901c9e0a1319a58d9b8e56c
+
+    conflicts       ${name}
+
+    checksums       rmd160  7efd6eef7edf7a9b3eb7ea09cac88aa34e27a111 \
+                    sha256  8c65c5ceb590f4c2eb1e710b0273cf2227681fd55aefcd69c75496bacf1b05ff
+}

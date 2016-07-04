@@ -1,0 +1,37 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-whois
+version             0.7
+categories-append   net
+platforms           darwin
+license             Permissive
+
+python.versions     26 27 33 34 35
+
+maintainers         gmail.com:allan.que openmaintainer
+
+description         Python wrapper for Linux 'whois' command
+
+long_description    ${description}
+
+homepage            https://github.com/DDarko/python-whois/
+master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
+
+distname            ${python.rootname}-${version}
+
+checksums           rmd160  dd15dd869904ddbba9d84ff093b9b10013b7530c \
+                    sha256  788ba4fa4986d06351c1572f63ef1576d26f3cd5ecf5d999934421540c87021c
+
+if {${name} ne ${subport}} {
+    depends_build-append \
+                        port:py${python.version}-setuptools \
+                        
+    livecheck.type      none
+} else {
+    livecheck.type      pypi
+}
+
