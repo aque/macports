@@ -33,7 +33,7 @@ depends_lib-append  port:py${python.version}-serial \
                     port:py${python.version}-pygtk
 
 subport ${name}-devel {
-    version         20160625
+    version         20160703
 
     master_sites    http://trac.chirp.danplanet.com/chirp_daily/LATEST/
     distname        ${name}-daily-${version}
@@ -41,8 +41,8 @@ subport ${name}-devel {
 
     conflicts       ${name}
 
-    checksums       rmd160  728090f3e0f9f9199019e5639d00a04d42cf19a3 \
-                    sha256  a9edff141665b648c624c3fdcae29035e91e0a849da0458bf52ba86862c004a2
+    checksums       rmd160  2314cf3dbc05dae87703c34fce672665dd42f8ea \
+                    sha256  a127f311bf73aa152b2287d005fae1b0e3190cddb1de77283ca4caece959a68d
 
 
     livecheck.regex "${name}-daily-(\\d+)"
@@ -57,7 +57,7 @@ destroot.destdir    --prefix=${destroot}${prefix}
 
 post-destroot {
     xinstall -d ${destroot}${python.prefix}
-    system "mv ${destroot}${prefix}/lib ${destroot}${python.prefix}"
+    file rename ${destroot}${prefix}/lib ${destroot}${python.prefix}
     reinplace -W ${destroot}${prefix} "s|#!${python.prefix}/Resources/Python.app/Contents/MacOS/Python|#!/usr/bin/env python${python.branch}|g" bin/chirpw
 }
 
