@@ -1,0 +1,70 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+name                dnstwist
+version             1.02
+categories          python security sysutils net
+platforms           darwin
+license             GPL-2
+maintainers         gmail.com:allan.que openmaintainer
+description         Domain name permutation engine for detecting typo squatting, \
+                    phishing and corporate espionage
+long_description    ${description}
+
+homepage            https://github.com/elceef/dnstwist
+
+conflicts           ${name}-devel
+
+github.setup        elceef ${name} ${version} v
+
+checksums           rmd160  4f4068df04cb59e7c9967a77df78eb12348893a0 \
+                    sha256  2cc47ea8dd7b098bb35cd5da2f4cd62e8d734add34aedcd1db5f1a424cac60b3
+
+set python.branch   2.7
+set python.version  27
+use_configure       no
+
+depends_run-append  port:python${python.version}
+depends_lib-append  port:py${python.version}-dnspython \
+                    port:py${python.version}-geoip \
+                    port:py${python.version}-whois \
+                    port:py${python.version}-requests \
+                    port:py${python.version}-ssdeep
+
+patch {
+    reinplace -W ${worksrcpath} "s|env python|env python${python.branch}|g" \
+        dnstwist.py
+    reinplace -W ${worksrcpath} "s|path.join(DIR|path.join('${prefix}/share/${name}'|g" \
+        dnstwist.py
+    file rename ${worksrcpath}/dnstwist.py ${worksrcpath}/dnstwist
+}
+
+build {}
+
+destroot {
+    xinstall -d -m 755 ${destroot}${prefix}/share/doc/${name}
+    foreach f [glob -directory ${worksrcpath}/docs *] {
+        file rename ${f} ${destroot}${prefix}/share/doc/${name}
+    }
+
+    xinstall -d -m 755 ${destroot}${prefix}/share/${name}
+    foreach d [list database dictionaries tools] {
+        file rename ${worksrcpath}/${d} ${destroot}${prefix}/share/${name}
+    }
+
+    xinstall -m 644 -W ${worksrcpath} Dockerfile requirements.txt \
+        ${destroot}${prefix}/share/doc/${name}
+
+    xinstall -m 755 -W ${worksrcpath} dnstwist \
+        ${destroot}${prefix}/bin
+}
+
+subport ${name}-devel {
+    conflicts ${name}
+    github.setup    elceef ${name} c4215ef298f2d7cdb2c3612f25a260bd7349429c
+    checksums       rmd160  21e0a174f721dee8a7f66ca6e2d167b24ff30955 \
+                    sha256  6e779c3260cfc09aaddfb55cad9cf2c945bd8aa4ad6749e481ee6131919c21f4
+}
