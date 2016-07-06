@@ -3,10 +3,11 @@
 
 PortSystem          1.0
 PortGroup           python 1.0
+PortGroup           app 1.0
 
 name                chirp
 version             0.4.1
-categories-append   science
+categories-append   comms
 platforms           darwin
 license             GPL-2
 maintainers         gmail.com:allan.que openmaintainer
@@ -27,6 +28,8 @@ checksums           rmd160  5cbd3aefeba9e4feabfbef0952aa63837dd29c02 \
                     sha256  8c9d652dc89dbab9e2a1a75c07aa7179ce403de078a4d02814365f89e183319e
 
 python.default_version  27
+app.executable      chirpw
+app.icon            share/chirp.png
 
 depends_lib-append  port:py${python.version}-serial \
                     port:py${python.version}-libxml2 \
@@ -51,6 +54,15 @@ subport ${name}-devel {
 patch {
     # build the GTK version instead
     reinplace "s|= \"darwin\"|= \"xdarwinx\"|" ${worksrcpath}/setup.py
+
+    # set correct path to icon file
+    if {${name} eq ${subport}} {
+        set mainapp ${worksrcpath}/chirpui/mainapp.py
+    } else {
+        set mainapp ${worksrcpath}/chirp/ui/mainapp.py
+    }
+    reinplace "s|/usr/share/pixmaps|${prefix}/share/pixmaps|" \
+        ${mainapp}
 }
 
 destroot.destdir    --prefix=${destroot}${prefix}
@@ -58,7 +70,6 @@ destroot.destdir    --prefix=${destroot}${prefix}
 post-destroot {
     xinstall -d ${destroot}${python.prefix}
     file rename ${destroot}${prefix}/lib ${destroot}${python.prefix}
-    reinplace -W ${destroot}${prefix} "s|#!${python.prefix}/Resources/Python.app/Contents/MacOS/Python|#!/usr/bin/env python${python.branch}|g" bin/chirpw
 }
 
-notes "Mac OS specific tips from the web site (http://chirp.danplanet.com/projects/chirp/wiki/MacOS_Tips) are still applicable. The Application Security section can be skipped, however, since we are not running a Mac app."
+notes "Read the Mac OS tips from Dan's web site at http://chirp.danplanet.com/projects/chirp/wiki/MacOS_Tips. The Application Security section can be skipped since we are running a wrapper app."
