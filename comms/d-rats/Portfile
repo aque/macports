@@ -40,7 +40,7 @@ depends_build-append \
                     port:py${python.version}-serial \
                     port:py${python.version}-libxslt \
                     port:cairo \
-                    port:pango \
+                    port:pango
 
 patchfiles          patch-mainwindow.diff \
                     patch-platform.diff
