@@ -10,7 +10,7 @@ categories          comms
 platforms           darwin
 license             GPL-3+
 maintainers         gmail.com:allan.que openmaintainer
-description         Amateur radio modem program
+description         amateur radio modem and file transfer program
 long_description    ${name} (Fast Light Digital Modem Application) is a cross-platform \
                     modem program that supports most of the digital modes used \
                     on the amateur radio bands.
@@ -41,17 +41,24 @@ universal_variant   no
 test.run            yes
 test.target         check
 
-app.icon            data/mac/${name}.icns
+app.icon            data/mac/fldigi.icns
 
 # enabling hamlib results in a compile error
 configure.post_args \
-                    --enable-static \
                     --enable-optimizations=sse2 \
                     --disable-mac-universal \
                     --without-hamlib
 
+if {${name} ne ${subport}} {
+    configure.post_args-append \
+                    --disable-fldigi \
+} else {
+    configure.post_args-append \
+                    --disable-flarq
+}
 
 post-configure {
+    # building with gcc
     # remove clang specific option in Makefile
     reinplace "s|-stdlib=libc++||g" src/Makefile doc/Makefile
 }
@@ -60,6 +67,35 @@ patch {
     # delete placeholder files that asciidoc creates
     file delete ${worksrcpath}/doc/fldigi.1
     file delete ${worksrcpath}/doc/flarq.1
+}
+
+post-destroot {
+    # delete locale files to avoid conflicts with fldigi on activate
+    if {${name} ne ${subport}} {
+        fs-traverse f ${destroot}${prefix}/share/locale {
+            if {[file type ${f}] eq "file"} {
+                file delete ${f}
+            }
+        }
+    }
+}
+
+# workaround app portgroup limitation where it can only create one app bundle
+# by making flarq its own port that depends on fldigi
+subport flarq {
+    app.name        flarq
+    app.executable  flarq
+    app.icon        data/mac/flarq.icns
+
+    long_description \
+                    ${subport} (Fast Light Automatic Repeat Request) is a file transfer \
+                    application that is based on the ARQ specification \
+                    developed by Paul Schmidt, K9PS.  It is capable of \
+                    transmitting and receiving frames of ARQ data via either \
+                    fldigi or MultiPsk on Windows, or fldigi on Linux.
+
+    depends_run-append \
+                    port:fldigi
 }
 
 livecheck.regex     ${name}-(\\d+(?:\\.\\d+)*)${extract.suffix}
