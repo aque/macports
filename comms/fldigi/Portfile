@@ -14,12 +14,12 @@ description         amateur radio modem and file transfer program
 long_description    ${name} (Fast Light Digital Modem Application) is a cross-platform \
                     modem program that supports most of the digital modes used \
                     on the amateur radio bands.
-version             3.23.12
+version             3.23.13
 homepage            http://www.w1hkj.com
 master_sites        sourceforge:project/fldigi/${name}
 
-checksums           rmd160  256a177701ab8c45365e57ec24f600c6d79d2175 \
-                    sha256  59ba6ad8304849cb92b3ec2251bd389f4dfa7755de07a4d1638f71b17c0b3cce
+checksums           rmd160  0ac304dfd7cd3b46627a5fa1013ca6d713076037 \
+                    sha256  09773a1f1559dc88d4ef92a5228dfa58679c79730eaa8973385a6767b2b7d67c
 
 depends_build-append \
                     port:pkgconfig \

@@ -60,16 +60,16 @@ build.target        {}
 
 subport ${name}-devel {
     PortGroup           github 1.0
-    github.setup        jawatson pythonprop d498639a41443cc18001ad92843238b7260f1947
-    version             20160327
+    github.setup        jawatson pythonprop 3983538a274d39da090acf8fb612625040db14f9
+    version             20160624
     conflicts           ${name}
 
     variant builddoc description {Build the .pdf doc - requires dblatex} {
         depends_build-append    port:dblatex
     }
 
-    checksums           rmd160  84969f1fe2acb7dd79dc31b1ded304485a6c11cb \
-                        sha256  d7549159451b95f49772887704ead19c2894ae20210224799024ee705f000996
+    checksums       rmd160  92b59db1fbd76ae7e4cabf0687e1991c2ea75758 \
+                    sha256  b08f3ebfd9594224da9794e790b2694ca1978ab5a838089c9a2c78564967ca8f
 
     use_autoconf        yes
     autoconf.cmd        ${worksrcpath}/autogen.sh

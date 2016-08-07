@@ -37,7 +37,7 @@ depends_lib-append  port:py${python.version}-serial \
                     port:py${python.version}-gtk-osx-application-gtk2
 
 subport ${name}-devel {
-    version         20160703
+    version         20160802
 
     master_sites    http://trac.chirp.danplanet.com/chirp_daily/LATEST/
     distname        ${name}-daily-${version}
@@ -45,9 +45,8 @@ subport ${name}-devel {
 
     conflicts       ${name}
 
-    checksums       rmd160  2314cf3dbc05dae87703c34fce672665dd42f8ea \
-                    sha256  a127f311bf73aa152b2287d005fae1b0e3190cddb1de77283ca4caece959a68d
-
+    checksums       rmd160  a8f7a656b9985195f403198bc5e0493b7a883a84 \
+                    sha256  1cb62932c4d586a7cdeec910b17e1aa2457fa30b2bcfea2228bb31250d5d9337
 
     livecheck.regex "${name}-daily-(\\d+)"
 }
