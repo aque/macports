@@ -2,6 +2,7 @@
 # $Id$
 
 PortSystem          1.0
+PortGroup           app 1.0
 
 name                pythonprop
 categories          python science
@@ -19,6 +20,11 @@ homepage            http://www.qsl.net/h/hz1jw/pythonprop
 version             0.22
 revision            0
 conflicts           ${name}-devel
+
+app.name            PythonProp
+app.executable      ${filespath}/wrapper.sh
+app.icon            src/${name}/ui/voacap.png
+app.identifier      net.hz1jw.pythonprop
 
 variant python34 conflicts python35 description {Use python 3.4} {}
 
@@ -89,3 +95,4 @@ post-activate {
     catch {system "${prefix}/bin/glib-compile-schemas ${prefix}/share/glib-2.0/schemas"}
 }
 
+notes "Run \'makeitshfbc\' from the voacapl port to create the ~/itshfbc directory structure."
