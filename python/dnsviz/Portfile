@@ -5,8 +5,9 @@ PortSystem          1.0
 PortGroup           python 1.0
 PortGroup           github 1.0
 
+github.setup        dnsviz dnsviz 0.5.4 v
+
 name                dnsviz
-version             0.5.4
 categories-append   security sysutils net
 platforms           darwin
 license             GPL-2
@@ -21,8 +22,6 @@ long_description    ${name} is a tool suite for analysis and visualization of Do
 homepage            http://dnsviz.net/
 
 conflicts           ${name}-devel
-
-github.setup        dnsviz dnsviz ${version} v
 
 checksums           rmd160  4e9d7849735e281e5b647b0f831da34088d42d09 \
                     sha256  3c7f9a175b6c7f66ef78af37c6ce10afb68527f648864add7791c8f6d77d96a3

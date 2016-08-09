@@ -4,8 +4,9 @@
 PortSystem          1.0
 PortGroup           github 1.0
 
+github.setup        elceef dnstwist 1.02 v
+
 name                dnstwist
-version             1.02
 categories          python security sysutils net
 platforms           darwin
 license             GPL-2
@@ -18,7 +19,6 @@ homepage            https://github.com/elceef/dnstwist
 
 conflicts           ${name}-devel
 
-github.setup        elceef ${name} ${version} v
 
 checksums           rmd160  4f4068df04cb59e7c9967a77df78eb12348893a0 \
                     sha256  2cc47ea8dd7b098bb35cd5da2f4cd62e8d734add34aedcd1db5f1a424cac60b3
@@ -64,7 +64,7 @@ destroot {
 
 subport ${name}-devel {
     conflicts ${name}
-    github.setup    elceef ${name} c4215ef298f2d7cdb2c3612f25a260bd7349429c
+    github.setup    elceef dnstwist c4215ef298f2d7cdb2c3612f25a260bd7349429c
     checksums       rmd160  21e0a174f721dee8a7f66ca6e2d167b24ff30955 \
                     sha256  6e779c3260cfc09aaddfb55cad9cf2c945bd8aa4ad6749e481ee6131919c21f4
 }
