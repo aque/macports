@@ -25,6 +25,9 @@ compilers.setup     require_fortran
 
 patch {
     reinplace "s|echo \$SRC_ROOT_DIR||" ${worksrcpath}/makeitshfbc
+
+    # prevent the double slash ('//') in symlinks
+    reinplace "s|\/share\/|\/share|" ${worksrcpath}/makeitshfbc
 }
 
 post-configure {
