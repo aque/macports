@@ -3,6 +3,7 @@
 
 PortSystem          1.0
 PortGroup           python 1.0
+PortGroup           active_variants 1.1
 PortGroup           app 1.0
 
 name                chirp
@@ -33,8 +34,16 @@ app.icon            share/chirp.png
 
 depends_lib-append  port:py${python.version}-serial \
                     port:py${python.version}-libxml2 \
-                    port:py${python.version}-pygtk \
-                    port:py${python.version}-gtk-osx-application-gtk2
+                    port:py${python.version}-pygtk 
+
+variant quartz {}
+
+if {[variant_isset quartz]} {
+    require_active_variants gtk2 quartz
+    depends_lib-append      port:py${python.version}-gtk-osx-application-gtk2
+} else {
+    require_active_variants gtk2 x11
+}
 
 subport ${name}-devel {
     version         20160930
@@ -64,11 +73,13 @@ patch {
     reinplace "s|/usr/share/|${prefix}/share/|g" \
         ${mainapp}
 
-    # switch to using gtk-osx-application-gtk2
-    reinplace "s|gtk_osxapplication|gtkosx_application|g" \
-        ${mainapp}
-    reinplace "s|.OSXApplication()|.Application()|" \
-        ${mainapp}
+    if {[variant_isset quartz]} {
+        # switch to using gtk-osx-application-gtk2
+        reinplace "s|gtk_osxapplication|gtkosx_application|g" \
+            ${mainapp}
+        reinplace "s|.OSXApplication()|.Application()|" \
+            ${mainapp}
+    }
 }
 
 destroot.destdir    --prefix=${destroot}${prefix}
