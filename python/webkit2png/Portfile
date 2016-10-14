@@ -5,7 +5,6 @@ PortSystem          1.0
 PortGroup           github 1.0
 
 github.setup        paulhammond webkit2png 0.7 v
-name                webkit2png
 categories          python graphics
 platforms           darwin
 license             permissive
