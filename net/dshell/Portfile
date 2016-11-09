@@ -1,0 +1,100 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+PortGroup           python 1.0
+
+github.setup        USArmyResearchLab Dshell 40114877ecfd45a6189fe3e97544d43558c9ca9a
+name                dshell
+version             20161101
+categories-append   net security
+maintainers         gmail.com:allan.que openmaintainer
+license             MIT
+platforms           darwin
+
+description         An extensible network forensic analysis framework.
+long_description    ${description} Enables rapid development of plugins to \
+                    support the dissection of network packet captures.
+
+checksums           rmd160  75cfd5ca86bd813063fdb1e741df5957c6c50141 \
+                    sha256  88a739d6541c9485bf0102d8da2534eef055310f73116d337831c6fca658fa35
+
+python.default_version  27
+
+depends_run         port:GeoLiteCity
+depends_build       port:py${python.version}-dpkt
+depends_lib         port:py${python.version}-crypto \
+                    port:py${python.version}-ipy \
+                    port:py${python.version}-pypcap \
+                    port:py${python.version}-geoip
+
+use_parallel_build  no
+build.cmd           make
+build.target        all
+build.env-append \
+    PYTHONPATH="${frameworks_dir}/Python.framework/Versions/${python.branch}/lib/python${python.branch}/site-packages"
+
+# Portfile Variables
+#
+# BINPATH - path to decode.py, generate-dshellrc.py and pcap(anon|slice).py
+set dshell.binpath "${prefix}/lib/dshell"
+#
+# DSHELL - path to main dshell bin file
+set dshell.dshell "${prefix}/bin"
+#
+# DATAPATH - GeoIP legacy files stored here
+set dshell.datapath "${prefix}/share/GeoIP"
+#
+# DECODERPATH
+set dshell.decoderpath "${prefix}/lib/dshell/decoders"
+#
+# LIBPATH
+set dshell.libpath "${prefix}/lib/dshell"
+
+patch {
+    # update python files with the exact python version
+    fs-traverse f ${worksrcpath} {
+        if {[string match "*.py" ${f}]} {
+            reinplace "s+env python+env python${python.branch}+g" ${f}
+            reinplace "s+bin/python+bin/python${python.branch}+g" ${f}
+        }
+    }
+}
+
+post-build {
+    foreach f [glob -type f -dir ${worksrcpath}/doc *.html] {
+        reinplace -locale C "s+${worksrcpath}/+${prefix}/+g" ${f}
+        reinplace -locale C "s+${prefix}/lib/+${dshell.libpath}/+g" ${f}
+        reinplace -locale C "s+${prefix}/decoders/+${dshell.decoderpath}/+g" ${f}
+    }
+
+    # replace .dshellrc paths
+    reinplace "s+${worksrcpath}/bin+${dshell.binpath}/bin+g" ${worksrcpath}/.dshellrc
+    reinplace "s+${worksrcpath}/share+${dshell.datapath}+g" ${worksrcpath}/.dshellrc
+    reinplace "s+${worksrcpath}/decoders+${dshell.decoderpath}+g" ${worksrcpath}/.dshellrc
+    reinplace "s+${worksrcpath}/lib+${dshell.libpath}+g" ${worksrcpath}/.dshellrc
+    reinplace "s+${worksrcpath}+${dshell.dshell}+g" ${worksrcpath}/.dshellrc
+
+    # update bin files to new .dshellrc file
+    reinplace -W ${worksrcpath} "s+${worksrcpath}/.dshellrc+${prefix}/etc/dshell.conf+g" \
+        dshell dshell-decode
+}
+
+destroot {
+    copy ${worksrcpath}/lib ${destroot}${dshell.libpath}
+    copy ${worksrcpath}/decoders ${destroot}${dshell.decoderpath}
+    copy ${worksrcpath}/bin ${destroot}${dshell.binpath}
+
+    # point symlink to correct path of decode.py
+    file delete ${destroot}${dshell.binpath}/bin/decode
+    ln -s ${dshell.binpath}/bin/decode.py ${destroot}${dshell.binpath}/bin/decode
+
+    # install html doc files
+    file delete ${worksrcpath}/doc/generate-doc.sh
+    foreach f [glob -type f -dir ${worksrcpath}/doc *.html] {
+        xinstall -m 644 ${f} ${destroot}${prefix}/share/doc/${name}
+    }
+
+    xinstall -m 755 -W ${worksrcpath} dshell dshell-decode ${destroot}${dshell.dshell}
+    xinstall -m 644 -W ${worksrcpath} .dshellrc ${destroot}${prefix}/etc/dshell.conf
+}
