@@ -1,11 +1,10 @@
-# $Id: Portfile 148976 2016-05-24 07:48:05Z raimue@macports.org $
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
 
 PortSystem         1.0
 PortGroup          python 1.0
 
 name               py-m2crypto
-version            0.24.0
-revision           0
+version            0.25.1
 categories-append  crypto devel
 # demos include some Apache-2 and ZPL-2 files but are not installed
 license            MIT
@@ -21,8 +20,8 @@ distname           M2Crypto-${version}
 
 python.versions    26 27
 
-checksums           rmd160  c5cfb4885ef56ed8f6651a0f12d698ca7db71c3c \
-                    sha256  80a56441a1d2c0cf27e725be7554c92598b938fc8767ee2c71fdbc2fdc055ee8
+checksums           rmd160  6dcb90c12a030b7c575efc310e6abd503be7e0a0 \
+                    sha256  ac303a1881307a51c85ee8b1d87844d9866ee823b4fdbc52f7e79187c2d9acef
 
 if {${name} ne ${subport}} {
   depends_build      port:py${python.version}-setuptools
