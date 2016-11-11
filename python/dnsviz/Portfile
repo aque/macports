@@ -1,11 +1,10 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id$
 
 PortSystem          1.0
 PortGroup           python 1.0
 PortGroup           github 1.0
 
-github.setup        dnsviz dnsviz 0.6.3 v
+github.setup        dnsviz dnsviz 0.6.4 v
 
 name                dnsviz
 categories-append   security sysutils net
@@ -23,8 +22,8 @@ homepage            http://dnsviz.net/
 
 conflicts           ${name}-devel
 
-checksums           rmd160  58ee57c72e89d4005975b6792c26f7e30fdb7b94 \
-                    sha256  8be057f184fd451921af357e2ef32bc9a3d6a12710b33b99554ea5a7e922bdf8
+checksums           rmd160  4602ec975e86c692657ef79da8f38364d90140cf \
+                    sha256  6e35c5d2f9def0ea3884b68155825ea10223b04096969d851943317cc7e3bbe4
 
 python.default_version  27
 
@@ -40,11 +39,11 @@ post-destroot {
 }
 
 subport ${name}-devel {
-    github.setup    dnsviz dnsviz 48cb8a6577119c4dbace8c67596c47b2916319ed
-    version         20161005
+    github.setup    dnsviz dnsviz d953c7c6756390a9c8a8a4f207b96d501a5be71d
+    version         20161109
 
     conflicts       ${name}
 
-    checksums       rmd160  da7241c5b3c88caaab2878058a314af784dc6c18 \
-                    sha256  14883e5979829790da3a30e01bd37535898768cda47521a26c69360dd52d6f03
+    checksums       rmd160  0dd55686eab558048516ba957ec6be087a9b95a1 \
+                    sha256  b651a53dc516a1978e856482f8ca2c42e49802bb799500c0aaadaf315edfd1f1
 }
