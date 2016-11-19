@@ -25,6 +25,7 @@ This is a repository of MacPorts Portfiles I wrote. Some of them were submitted 
 The following ports have been accepted into Macports. They have been removed from this repository.
 
 * iperf3 - Measures the maximum achievable bandwidth on IP networks
+* py-m2crypto - Crypto and SSL toolkit for Python
 
 ## Bugs
 
