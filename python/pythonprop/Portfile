@@ -57,21 +57,23 @@ depends_run         port:adwaita-icon-theme \
                     port:yelp \
                     port:voacapl
 
+patchfiles          patch-voaP2PPlot.py
+
 configure.env-append    PYTHON="${prefix}/bin/python${python.branch}"
 build.target        {}
 
 subport ${name}-devel {
     PortGroup           github 1.0
-    github.setup        jawatson pythonprop 3983538a274d39da090acf8fb612625040db14f9
-    version             20160624
+    github.setup        jawatson pythonprop e361dbfc01588904e54ed0e239b5ad930b2db4fd
+    version             20170302
     conflicts           ${name}
 
     variant builddoc description {Build the .pdf doc - requires dblatex} {
         depends_build-append    port:dblatex
     }
 
-    checksums       rmd160  92b59db1fbd76ae7e4cabf0687e1991c2ea75758 \
-                    sha256  b08f3ebfd9594224da9794e790b2694ca1978ab5a838089c9a2c78564967ca8f
+    checksums           rmd160  c5101a1cc7f38e8b586666fbe03087ff20a58c4e \
+                        sha256  faf10dcaebdeacbf41e7693feace1b7cce81b54f66ab343f338a2d4a6c4056cf
 
     use_autoconf        yes
     autoconf.cmd        ${worksrcpath}/autogen.sh
@@ -81,7 +83,7 @@ if {${name} eq ${subport}} {
     master_sites        http://www.qsl.net/hz1jw/pythonprop/downloads
 }
 
-patch {
+post-patch {
     if {${name} ne ${subport} && ![variant_isset builddoc]} {
         # comment out pdf document building in Makefile.am
         reinplace -W ${worksrcpath}/docs/user/help "s+^pdf_DATA+#pdf_DATA+g" Makefile.am
