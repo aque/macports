@@ -45,8 +45,9 @@ if {[variant_isset python34]} {
 checksums           rmd160  c83323c27f04d6a8b5760cc3b1fb8d77a6f5be2f \
                     sha256  cd06c766deee73fa0a4817b3868d029daa2ac486eabc926fb9b9d7a79214fbf5
 
-depends_lib         port:gnome-doc-utils \
-                    port:py${python.version}-pip \
+depends_build       port:gnome-doc-utils
+
+depends_lib         port:py${python.version}-pip \
                     port:py${python.version}-matplotlib-basemap \
                     port:py${python.version}-gobject3 \
                     port:py${python.version}-cairocffi
