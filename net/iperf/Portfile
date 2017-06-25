@@ -42,6 +42,5 @@ variant base description {Build without any patches} {
     patch {}
 }
 
-livecheck.url       http://sourceforge.net/projects/${name}/rss
 livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
-livecheck.type      regex
+livecheck.type      sourceforge
