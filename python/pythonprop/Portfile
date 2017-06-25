@@ -56,23 +56,21 @@ depends_run         port:adwaita-icon-theme \
                     port:yelp \
                     port:voacapl
 
-patchfiles          patch-voaP2PPlot.py
-
 configure.env-append    PYTHON="${prefix}/bin/python${python.branch}"
 build.target        {}
 
 subport ${name}-devel {
     PortGroup           github 1.0
-    github.setup        jawatson pythonprop e361dbfc01588904e54ed0e239b5ad930b2db4fd
-    version             20170302
+    github.setup        jawatson pythonprop 4fca8189ed6cbf756fabfe2bb5a2df3fbbefe450
+    version             20170622
     conflicts           ${name}
 
     variant builddoc description {Build the .pdf doc - requires dblatex} {
         depends_build-append    port:dblatex
     }
 
-    checksums           rmd160  c5101a1cc7f38e8b586666fbe03087ff20a58c4e \
-                        sha256  faf10dcaebdeacbf41e7693feace1b7cce81b54f66ab343f338a2d4a6c4056cf
+    checksums           rmd160  02733fa81b85f126e68961e2788278c356e4ca23 \
+                        sha256  36a53815eb35ec44c154337d6fc72cca2452f5bf21ff24670ab00fddd4430419
 
     use_autoconf        yes
     autoconf.cmd        ${worksrcpath}/autogen.sh
@@ -80,6 +78,7 @@ subport ${name}-devel {
 
 if {${name} eq ${subport}} {
     master_sites        http://www.qsl.net/hz1jw/pythonprop/downloads
+    patchfiles          patch-voaP2PPlot.py
 }
 
 post-patch {
