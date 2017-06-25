@@ -3,8 +3,7 @@
 PortSystem 1.0
 
 name                iperf
-version             2.0.5
-revision            1
+version             2.0.9
 categories          net
 platforms           darwin
 license             permissive
@@ -19,28 +18,11 @@ long_description    Iperf is a tool for measuring maximum TCP and UDP \
                     to Iperf 3 and this is to maintain compatibility \
                     with legacy code and scripts.
 
-homepage            http://iperf.sourceforge.net
-master_sites        sourceforge:iperf
+homepage            http://iperf2.sourceforge.net
+master_sites        sourceforge:iperf2
 
-checksums           rmd160  975d971974437136ae72bb17c0f776ea92eaf878 \
-                    sha256  636b4eff0431cea80667ea85a67ce4c68698760a9837e1e9d13096d20362265b
-
-# submitted patches from iperf sourceforge site
-# http://sourceforge.net/p/iperf/patches/
-patchfiles          patch-015-new-delay.diff \
-                    patch-018-currlen-unsigned-bug.diff \
-                    patch-019-update-buffer-size-usage.diff \
-                    patch-020-eliminate-printf-compiler-warnings.diff \
-                    patch-022-parallel-bind.diff \
-                    patch-026-multicast-support.diff \
-                    patch-027-allowburst.diff \
-                    patch-028-nomaxcpu.diff \
-                    patch-029-out-of-tree-configure.diff
-
-variant base description {Build without any patches} {
-    # in case there is an issue with a patch
-    patch {}
-}
+checksums           rmd160  5017173f41793b402426a12e491226a0534c568b \
+                    sha256  db02911f35686e808ed247160dfa766e08ae3f59d1e7dcedef0ffb2a6643f0bf
 
 livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
 livecheck.type      sourceforge
