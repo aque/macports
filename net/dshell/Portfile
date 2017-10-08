@@ -43,7 +43,8 @@ set dshell.binpath "${prefix}/lib/dshell"
 set dshell.dshell "${prefix}/bin"
 #
 # DATAPATH - GeoIP legacy files stored here
-set dshell.datapath "${prefix}/share/GeoIP"
+# dshell.py set to look for '/GeoIP/...' under DATAPATH
+set dshell.datapath "${prefix}/share"
 #
 # DECODERPATH
 set dshell.decoderpath "${prefix}/lib/dshell/decoders"
