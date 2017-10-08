@@ -4,9 +4,9 @@ PortSystem          1.0
 PortGroup           github 1.0
 PortGroup           python 1.0
 
-github.setup        USArmyResearchLab Dshell 40114877ecfd45a6189fe3e97544d43558c9ca9a
+github.setup        USArmyResearchLab Dshell de3dcdd3584f5b9f8b0a480b6a4c3cb4eb24809b
 name                dshell
-version             20161101
+version             20170926
 categories-append   net security
 maintainers         gmail.com:allan.que openmaintainer
 license             MIT
@@ -16,8 +16,8 @@ description         An extensible network forensic analysis framework.
 long_description    ${description} Enables rapid development of plugins to \
                     support the dissection of network packet captures.
 
-checksums           rmd160  75cfd5ca86bd813063fdb1e741df5957c6c50141 \
-                    sha256  88a739d6541c9485bf0102d8da2534eef055310f73116d337831c6fca658fa35
+checksums           rmd160  13a44efdab8d9549c7a1499872b189d7a9c410f9 \
+                    sha256  6259596f2bfeaf0f0b9606d0d3c4a86945a6e97f26144cedb7fd34d6ccaf1cea
 
 python.default_version  27
 
