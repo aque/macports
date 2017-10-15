@@ -21,12 +21,13 @@ checksums           rmd160  13a44efdab8d9549c7a1499872b189d7a9c410f9 \
 
 python.default_version  27
 
-depends_run         port:GeoLiteCity
+depends_run         port:GeoLiteCity \
+                    port:geoipupdate
 depends_build       port:py${python.version}-dpkt
 depends_lib         port:py${python.version}-crypto \
                     port:py${python.version}-ipy \
                     port:py${python.version}-pypcap \
-                    port:py${python.version}-geoip
+                    port:py${python.version}-pygeoip
 
 use_parallel_build  no
 build.cmd           make
@@ -56,17 +57,17 @@ patch {
     # update python files with the exact python version
     fs-traverse f ${worksrcpath} {
         if {[string match "*.py" ${f}]} {
-            reinplace "s+env python+env python${python.branch}+g" ${f}
-            reinplace "s+bin/python+bin/python${python.branch}+g" ${f}
+            reinplace -q "s+env python+env python${python.branch}+g" ${f}
+            reinplace -q "s+bin/python+bin/python${python.branch}+g" ${f}
         }
     }
 }
 
 post-build {
     foreach f [glob -type f -dir ${worksrcpath}/doc *.html] {
-        reinplace -locale C "s+${worksrcpath}/+${prefix}/+g" ${f}
-        reinplace -locale C "s+${prefix}/lib/+${dshell.libpath}/+g" ${f}
-        reinplace -locale C "s+${prefix}/decoders/+${dshell.decoderpath}/+g" ${f}
+        reinplace -q -locale C "s+${worksrcpath}/+${prefix}/+g" ${f}
+        reinplace -q -locale C "s+${prefix}/lib/+${dshell.libpath}/+g" ${f}
+        reinplace -q -locale C "s+${prefix}/decoders/+${dshell.decoderpath}/+g" ${f}
     }
 
     # replace .dshellrc paths
