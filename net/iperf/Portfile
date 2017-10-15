@@ -3,26 +3,24 @@
 PortSystem 1.0
 
 name                iperf
-version             2.0.9
+version             2.0.10
 categories          net
 platforms           darwin
 license             permissive
-maintainers         gmail.com:allan.que openmaintainer
+maintainers         {gmail.com:allan.que @aque} openmaintainer
 
 description         A tool to measure maximum TCP and UDP bandwidth
 long_description    Iperf is a tool for measuring maximum TCP and UDP \
                     bandwidth, reminiscent of ttcp and nettest. It has \
                     been written to overcome the shortcomings of those \
                     aging tools. Iperf can also test UDP bandwidth, \
-                    loss, and jitter. Primary development has moved \
-                    to Iperf 3 and this is to maintain compatibility \
-                    with legacy code and scripts.
+                    loss, and jitter.
 
 homepage            http://iperf2.sourceforge.net
 master_sites        sourceforge:iperf2
 
-checksums           rmd160  5017173f41793b402426a12e491226a0534c568b \
-                    sha256  db02911f35686e808ed247160dfa766e08ae3f59d1e7dcedef0ffb2a6643f0bf
+checksums           rmd160  d7062b7f619d28e129f478c94fdcc48a59ba76d8 \
+                    sha256  7fe4348dcca313b74e0aa9c34a8ccd713b84a5615b8578f4aa94cedce9891ef2
 
 livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
 livecheck.type      sourceforge
