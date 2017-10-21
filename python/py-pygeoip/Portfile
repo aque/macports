@@ -1,0 +1,28 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup python    1.0
+
+name                py-pygeoip
+version             0.3.2
+categories-append   net
+platforms           darwin
+license             LGPL-3+
+maintainers         {gmail.com:allan.que @aque}
+
+description         Pure Python GeoIP API
+long_description    ${description}. Based on Maxmind's GeoIP C API.
+
+homepage            https://github.com/appliedsec/pygeoip
+master_sites        pypi:p/pygeoip
+distname            pygeoip-${version}
+
+checksums           md5     861664f8be3bed44820356539f2ea5b6 \
+                    rmd160  3d7dec098f3a2094d3fe8c4f6f32009d034829dd \
+                    sha256  f22c4e00ddf1213e0fae36dc60b46ee7c25a6339941ec1a975539014c1f9a96d
+
+python.versions     27 33 34
+
+if {${name} ne ${subport}} {
+    livecheck.type  none
+}
