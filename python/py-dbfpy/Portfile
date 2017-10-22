@@ -1,0 +1,29 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup python    1.0
+
+name                py-dbfpy
+version             2.3.1
+categories-append   databases
+platforms           darwin
+license             Public-Domain
+maintainers         {gmail.com:allan.que @aque}
+
+description         module for reading and writing DBF files
+long_description    ${name} can read and write simple DBF files created by \
+                    dBase, Foxpro, Clipper, and similar applications.
+
+homepage            http://dbfpy.sourceforge.net/
+master_sites        pypi:d/dbfpy
+distname            dbfpy-${version}
+
+checksums           md5     62c751c82e6017037e2181f9fe17053c \
+                    rmd160  769a82a014bf05d5d46009cf15749798a20d6ec9 \
+                    sha256  0a2a2af2ce9f1eb9b27b78a071e27f4fd367e1847228816b3230034c8825c7e7
+
+python.versions     27 33 34 35 36
+
+if {${name} ne ${subport}} {
+    livecheck.type  none
+}
