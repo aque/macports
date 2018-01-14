@@ -1,11 +1,9 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id$
 
 PortSystem          1.0
 PortGroup           github 1.0
 
-github.setup        joswr1ght bitfit 3ce8b0d639206241c4b2edd47e491d1105ee4de4
-version             20151110
+github.setup        joswr1ght bitfit 1.1.2 v
 categories          sysutils python
 maintainers         gmail.com:allan.que openmaintainer
 license             MIT
@@ -19,8 +17,8 @@ long_description    Recursively validate a starting directory of file contents \
 
 homepage            https://github.com/joswr1ght/bitfit
 
-checksums           rmd160  20922eb252eae0cf07c255157b704a5a76a99e12 \
-                    sha256  5e90554a0b742dbb32c81ab09b6025e5e232d4e954ae06e53ee1244ac19aa55e
+checksums           rmd160  39a40463d8ad3c2f757b38de602903500de1820e \
+                    sha256  2979580247717be3efda30b26e399bb9e1dfad6bee7b2d61d66a7c1eecd60c17
 
 use_configure       no
 
