@@ -1,16 +1,15 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id$
 
 PortSystem          1.0
 PortGroup           python 1.0
 
 name                py-ssdeep
-version             3.1.1
+version             3.3
 categories-append   security
 platforms           darwin
-license             Permissive
+license             LGPL-3+
 
-python.versions     26 27 33 34 35
+python.versions     26 27 33 34 35 36
 
 maintainers         gmail.com:allan.que openmaintainer
 
@@ -25,12 +24,13 @@ master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
 
 distname            ${python.rootname}-${version}
 
-checksums           rmd160  fb33b00f6db1ac833e217d2b608c79ff2f5d5ca2 \
-                    sha256  a6c66309e6b540d5c8ba08c018675dabaef2172f2cc6f6351b67395ba7bf2ddd
+checksums           rmd160  60218e6525bfd3b669478b340c1910387d1d63be \
+                    sha256  255de1f034652b3ed21920221017e70e570b1644f9436fea120ae416175f4ef5
 
 if {${name} ne ${subport}} {
     depends_build-append \
                         port:py${python.version}-setuptools \
+                        port:py${python.version}-pytest-runner \
                         port:ssdeep
                         
     depends_run-append  port:py${python.version}-cffi \
