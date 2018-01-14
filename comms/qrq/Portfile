@@ -17,17 +17,38 @@ master_sites        https://fkurz.net/ham/qrq
 checksums           rmd160  75a0e9a241c3fd58ceeda138d659262f7b36de54 \
                     sha256  92988a33b7eddb3941cf91a285a57f4f0872722adf003350a8afe2caf83159a1
 
-depends_build       port:pulseaudio \
-                    port:ncurses
+patchfiles          patch-Makefile.diff
+
+variant bundle description {Build macOS application bundle} {
+    build.cmd-append \
+                    OSX_BUNDLE=YES
+}
+
+if {![variant_isset bundle]} {
+    build.cmd-append \
+                    OSX_BUNDLE=NO
+
+    destroot.destdir \
+                    DESTDIR="${destroot}${prefix}"
+}
 
 use_configure       no
-build.post_args-append \
-                    OSX_PLATFORM="YES" OSX_BUNDLE="NO" USE_PA="YES" \
-                    DESTDIR="${prefix}"
 
-destroot.destdir    DESTDIR="${destroot}${prefix}"
+# issues with ncurses 6 line drawings. build with macOS version instead.
+build.env-append    LDFLAGS="-L/usr/lib -lncurses"
+build.cmd-append    OSX_PLATFORM=YES \
+                    USE_PA=NO \
+                    USE_CA=YES \
+                    USE_WIN32=NO \
+                    DESTDIR=${prefix}
+
                     
-patch {
+post-patch {
     reinplace -W ${worksrcpath} "s+!/usr/bin/perl+!/usr/bin/env perl+g" qrqscore
 }
 
+post-destroot {
+    if {[variant_isset bundle]} {
+        file rename ${worksrcpath}/${name}.app ${destroot}${applications_dir}
+    }
+}

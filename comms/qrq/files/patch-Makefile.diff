@@ -1,0 +1,13 @@
+--- Makefile	2017-10-22 20:55:13.000000000 -0500
++++ Makefile	2017-10-22 22:23:41.000000000 -0500
+@@ -32,8 +32,8 @@
+ 		OBJECTS=qrq.o coreaudio.o
+ 		CFLAGS:=$(CFLAGS) -D CA -std=c99 -pthread
+ 		ifeq ($(OSX_PLATFORM), YES)
+-			LDFLAGS:=$(LDFLAGS) -framework AudioUnit -framework CoreServices  -isysroot /Developer/SDKs/MacOSX10.6.sdk -mmacosx-version-min=10.5
+-			CFLAGS:=$(CFLAGS) -isysroot /Developer/SDKs/MacOSX10.6.sdk -mmacosx-version-min=10.5
++			LDFLAGS:=$(LDFLAGS) -framework AudioUnit -framework CoreServices  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.5
++			CFLAGS:=$(CFLAGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.5
+ 			ifeq ($(OSX_BUNDLE), YES)
+ 				CFLAGS:=$(CFLAGS) -D OSX_BUNDLE
+ 			endif
