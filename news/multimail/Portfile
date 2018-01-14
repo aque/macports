@@ -1,5 +1,4 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id$
 
 PortSystem          1.0
 PortGroup           github 1.0
@@ -15,11 +14,11 @@ long_description    ${name} MultiMail is an offline mail packet reader for Unix/
                     It supports the Blue Wave, QWK, OMEN, SOUP and OPX formats.
 homepage            http://wmcbrine.com/mmail/
 
-github.setup        wmcbrine MultiMail 2e4479f0e6e52e7ca0ceeb81cb0fe61b7071c456
-version             20160105
+github.setup        wmcbrine MultiMail b876c44b8ef11b7d1b3ba5e9e761da2d58836cb7
+version             20171205
 
-checksums           rmd160  0102b4c82446c99ca1df5542ec03fbc6f4ed9b7d \
-                    sha256  164113e108d6e24614716d352bec80a0debe83f6268780a680c68d7b369963ae
+checksums           rmd160  eb1345f91e72aa1f41ddf14ceae04ee0b6f0c10f \
+                    sha256  51f77815a292765c231404eca7178d0c2a20d299312c5da80a6c998e03632323
 
 depends_run         port:zip
 depends_lib         port:ncurses
@@ -30,7 +29,7 @@ pre-destroot {
     reinplace -W ${worksrcpath} "s|PREFIX)/man|PREFIX)/share/man|g" Makefile
 
     xinstall -d ${destroot}${prefix}/share/doc/${name}
-    xinstall -m 644 -W ${worksrcpath} COPYING HISTORY.md README.md \
+    xinstall -m 644 -W ${worksrcpath} COPYING.md HISTORY.md README.md \
         ${destroot}${prefix}/share/doc/${name}
 
 }
