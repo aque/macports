@@ -1,5 +1,4 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id$
 
 PortSystem          1.0
 PortGroup           python 1.0
@@ -7,7 +6,7 @@ PortGroup           active_variants 1.1
 PortGroup           app 1.0
 
 name                chirp
-version             0.4.1
+version             20180104
 categories-append   comms
 platforms           darwin
 license             GPL-2
@@ -20,13 +19,12 @@ long_description    ${name} is a free, open-source tool for programming your ama
 
 homepage            http://chirp.danplanet.com/
 
-master_sites        http://chirp.danplanet.com/download/${version}
-distfiles           ${name}-${version}${extract.suffix}
+master_sites        http://trac.chirp.danplanet.com/chirp_daily/LATEST/
+distname            ${name}-daily-${version}
+distfiles           ${distname}${extract.suffix}
 
-conflicts           ${name}-devel
-
-checksums           rmd160  5cbd3aefeba9e4feabfbef0952aa63837dd29c02 \
-                    sha256  8c9d652dc89dbab9e2a1a75c07aa7179ce403de078a4d02814365f89e183319e
+checksums           rmd160  ea990c6a21c728b3aeeb7130ace08ce800e0dae9 \
+                    sha256  ee7e8be4b2f630a16a4682d9393764a4683c78319a5d424d4bb5826e172251a4
 
 python.default_version  27
 app.executable      chirpw
@@ -45,31 +43,13 @@ if {[variant_isset quartz]} {
     require_active_variants gtk2 x11
 }
 
-subport ${name}-devel {
-    version         20160930
-
-    master_sites    http://trac.chirp.danplanet.com/chirp_daily/LATEST/
-    distname        ${name}-daily-${version}
-    distfiles       ${distname}${extract.suffix}
-
-    conflicts       ${name}
-
-    checksums           rmd160  25601dee2c25ecd920dcfeae8ae3ec241e4e33ef \
-                        sha256  c7035f915faad4f813a2ad4222152589beb719abb3a924eaa913bb7c9296cfa8
-
-    livecheck.regex "${name}-daily-(\\d+)"
-}
-
 patch {
     # build the GTK version instead
     reinplace "s|= \"darwin\"|= \"xdarwinx\"|" ${worksrcpath}/setup.py
 
     # set correct path to icon file
-    if {${name} eq ${subport}} {
-        set mainapp ${worksrcpath}/chirpui/mainapp.py
-    } else {
-        set mainapp ${worksrcpath}/chirp/ui/mainapp.py
-    }
+    set mainapp ${worksrcpath}/chirp/ui/mainapp.py
+
     reinplace "s|/usr/share/|${prefix}/share/|g" \
         ${mainapp}
 
@@ -88,5 +68,7 @@ post-destroot {
     xinstall -d ${destroot}${python.prefix}
     file rename ${destroot}${prefix}/lib ${destroot}${python.prefix}
 }
+
+livecheck.regex     "${name}-daily-(\\d+)"
 
 notes "Read the Mac OS tips from Dan's web site at http://chirp.danplanet.com/projects/chirp/wiki/MacOS_Tips. The Application Security section can be skipped since we are running a wrapper app."
