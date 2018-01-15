@@ -16,7 +16,7 @@ long_description    ${name} is a collection of Python scripts designed to work \
                     propagation to predict point-to-point path loss and coverage.
 homepage            http://www.qsl.net/h/hz1jw/pythonprop
 
-version             0.22
+version             0.24
 revision            0
 conflicts           ${name}-devel
 
@@ -30,7 +30,7 @@ variant python34 conflicts python35 description {Use python 3.4} {}
 variant python35 conflicts python34 description {Use python 3.5} {}
 
 if {![variant_isset python34] && ![variant_isset python35]} {
-    default_variants-append +python34
+    default_variants-append +python35
 }
 
 if {[variant_isset python34]} {
@@ -41,10 +41,11 @@ if {[variant_isset python34]} {
     set python.branch   3.5
 }
 
-checksums           rmd160  c83323c27f04d6a8b5760cc3b1fb8d77a6f5be2f \
-                    sha256  cd06c766deee73fa0a4817b3868d029daa2ac486eabc926fb9b9d7a79214fbf5
+checksums           rmd160  bf756035dd0cea13935ccbabd516f69f1f7be534 \
+                    sha256  45739adbf1219783ac1c3dd611eac67f16d016fa949da5a58a84dc1a246f7563
 
-depends_build       port:gnome-doc-utils
+depends_build       port:makeicns \
+                    port:gnome-doc-utils
 
 depends_lib         port:py${python.version}-pip \
                     port:py${python.version}-matplotlib-basemap \
