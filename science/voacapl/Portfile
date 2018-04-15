@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           compilers 1.0
 
 name                voacapl
-version             0.6.7
+version             0.7.2
 categories          science
 platforms           darwin
 license             Permissive
@@ -17,10 +17,9 @@ long_description    Voice of America Coverage Analysis Program - free profession
 homepage            http://www.voacap.com
 master_sites        http://www.qsl.net/hz1jw/voacapl/downloads/
 
-checksums           rmd160  f882ff16cbc61431ec5450d093f444e47e918b74 \
-                    sha256  a55afe8d10728573b147dfd6e73dc87a1e81d281c60547f5a800a2220e699278
+checksums           rmd160  4632e1ce8445fc0413fa9e9d167b2548a2b6918b \
+                    sha256  18cf19419c17f0b1fe52b403206e4f9a79d57e4d09d1622064d8f1ccc3871b8d
 
-compilers.choose    f77
 compilers.setup     require_fortran
 
 patch {
@@ -38,4 +37,4 @@ post-configure {
         ${worksrcpath}/Makefile
 }
 
-notes "Run \'makeitshfbc\' to create the ~/itshfbc directory structure."
+notes "Run \'makeitshfbc\' to create the itshfbc directory in your home folder."
