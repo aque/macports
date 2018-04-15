@@ -1,6 +1,6 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
 
-PortSystem 1.0
+PortSystem          1.0
 
 name                iperf
 version             2.0.10
@@ -19,8 +19,24 @@ long_description    Iperf is a tool for measuring maximum TCP and UDP \
 homepage            http://iperf2.sourceforge.net
 master_sites        sourceforge:iperf2
 
+conflicts           ${name}-devel
+
 checksums           rmd160  d7062b7f619d28e129f478c94fdcc48a59ba76d8 \
                     sha256  7fe4348dcca313b74e0aa9c34a8ccd713b84a5615b8578f4aa94cedce9891ef2
 
-livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
-livecheck.type      sourceforge
+subport ${name}-devel {
+    version         20180410
+
+    conflicts       ${name}
+
+    fetch.type      git
+    git.url         git://git.code.sf.net/p/iperf2/code
+    git.branch      8aa5ca82c852637acace8f6f8a49b6a6101082f0
+}
+
+if {${name} eq ${subport}} {
+    livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
+    livecheck.type      sourceforge
+} else {
+    livecheck.type      none
+}
