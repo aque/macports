@@ -14,11 +14,12 @@ long_description    ${name} MultiMail is an offline mail packet reader for Unix/
                     It supports the Blue Wave, QWK, OMEN, SOUP and OPX formats.
 homepage            http://wmcbrine.com/mmail/
 
-github.setup        wmcbrine MultiMail b876c44b8ef11b7d1b3ba5e9e761da2d58836cb7
-version             20171205
+github.setup        wmcbrine MultiMail 8b1fe0caa888e90d9f617f6c75b850ec84bf969b
+version             20180405
 
-checksums           rmd160  eb1345f91e72aa1f41ddf14ceae04ee0b6f0c10f \
-                    sha256  51f77815a292765c231404eca7178d0c2a20d299312c5da80a6c998e03632323
+checksums           rmd160  3e8d77644a4578ca64fa4d095145b5bd1b37344e \
+                    sha256  7784c0ea3f8c8507487e96c1059dcac588bcd68e47f7d0933e5bfe7e630af15f \
+                    size    221127
 
 depends_run         port:zip
 depends_lib         port:ncurses
