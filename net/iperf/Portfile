@@ -26,18 +26,21 @@ checksums           rmd160  3f77baa8da2b5ffba4105a83c135676dec6ab828 \
                     size    330923
 
 subport ${name}-devel {
-    version         20180524
+    version         20180531
 
     conflicts       ${name}
 
     fetch.type      git
     git.url         git://git.code.sf.net/p/iperf2/code
-    git.branch      d7722ea928e5e168a2a7d60fe1b8bed596d4ea3c
+    git.branch      ccde718fd5112a1047ade5ed376a9cdd79a2601d
 }
 
 if {${name} eq ${subport}} {
     livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
     livecheck.type      sourceforge
 } else {
-    livecheck.type      none
+    livecheck.type      regexm
+    livecheck.url       https://sourceforge.net/p/iperf2/code/feed
+    livecheck.regex     /(\[0-9a-f\]{[string length ${git.branch}]})/
+    livecheck.version   ${git.branch}
 }
