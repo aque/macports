@@ -64,8 +64,9 @@ destroot {
 
 subport ${name}-devel {
     conflicts ${name}
-    github.setup    elceef dnstwist ee9c2fe575d3c7ed7f5f1c96a95b98fa09687073
-    version         20161008
-    checksums       rmd160  62dd3fe9b1407483e1b2631afc41c5470ba88d7f \
-                    sha256  5b7b9dad882d1e31a6fbe8634f4d10055548587eb876e0f23fbbcdfb2c06b48d
+    github.setup    elceef dnstwist fdf5ffc053aa5154672d20e1d65aa6883a1560bc
+    version         20180601
+    checksums       rmd160  d3b7ae99b519d7b9269a183cfaefe1c2400dc63e \
+                    sha256  8bbc24dcd851c53fa25337102728c2580fe8920222814b77b111d1dcdb4c2227 \
+                    size    1115605
 }
