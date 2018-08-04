@@ -3,7 +3,7 @@
 PortSystem          1.0
 
 name                iperf
-version             2.0.11
+version             2.0.12
 categories          net
 platforms           darwin
 license             permissive
@@ -21,22 +21,22 @@ master_sites        sourceforge:iperf2
 
 conflicts           ${name}-devel
 
-checksums           rmd160  3f77baa8da2b5ffba4105a83c135676dec6ab828 \
-                    sha256  b7d650d07c6bb0e357b5938a20e4ac33876012fddb952299c5d321e6958da5d2 \
-                    size    330923
+checksums           rmd160  4b75507a566582a6449a07395055a77ccf6ab37c \
+                    sha256  367f651fb1264b13f6518e41b8a7e08ce3e41b2a1c80e99ff0347561eed32646 \
+                    size    324528
 
 subport ${name}-devel {
-    version         20180531
+    version         20180803
 
     conflicts       ${name}
 
     fetch.type      git
     git.url         git://git.code.sf.net/p/iperf2/code
-    git.branch      ccde718fd5112a1047ade5ed376a9cdd79a2601d
+    git.branch      6f056ed1ab019a10965adbfeab1ae820ae167e28
 }
 
 if {${name} eq ${subport}} {
-    livecheck.regex     {iperf-(\d+(?:\.\d+)*)}
+    livecheck.regex     iperf-(\\d+(?:\\.\\d+)*\\w?)${extract.suffix}
     livecheck.type      sourceforge
 } else {
     livecheck.type      regexm
