@@ -16,7 +16,7 @@ long_description    ${name} is a collection of Python scripts designed to work \
                     propagation to predict point-to-point path loss and coverage.
 homepage            http://www.qsl.net/h/hz1jw/pythonprop
 
-version             0.24
+version             0.28
 revision            0
 conflicts           ${name}-devel
 
@@ -41,8 +41,13 @@ if {[variant_isset python34]} {
     set python.branch   3.5
 }
 
-checksums           rmd160  bf756035dd0cea13935ccbabd516f69f1f7be534 \
-                    sha256  45739adbf1219783ac1c3dd611eac67f16d016fa949da5a58a84dc1a246f7563
+variant builddoc description {Build the .pdf doc - requires dblatex} {
+    depends_build-append    port:dblatex
+}
+
+checksums           rmd160  46dc7366d0f508319b608e7323c6ca2bc7e49b8e \
+                    sha256  73b29158d4ae03fd0cd70425b8ee1584ce908090744f366e9d2d3f80ed95e08b \
+                    size    1141959
 
 depends_build       port:makeicns \
                     port:gnome-doc-utils
@@ -52,8 +57,8 @@ depends_lib         port:py${python.version}-pip \
                     port:py${python.version}-gobject3 \
                     port:py${python.version}-cairocffi
 
-depends_run         port:adwaita-icon-theme \
-                    port:gnome-themes-standard \
+depends_run         port:py${python.version}-pyproj \
+                    port:adwaita-icon-theme \
                     port:yelp \
                     port:voacapl
 
@@ -62,32 +67,28 @@ build.target        {}
 
 subport ${name}-devel {
     PortGroup           github 1.0
-    github.setup        jawatson pythonprop 4fca8189ed6cbf756fabfe2bb5a2df3fbbefe450
-    version             20170622
+    github.setup        jawatson pythonprop 5bf1d555378337f978e08225e2ddd731662c27ad
+    version             20180304
     conflicts           ${name}
 
-    variant builddoc description {Build the .pdf doc - requires dblatex} {
-        depends_build-append    port:dblatex
-    }
-
-    checksums           rmd160  02733fa81b85f126e68961e2788278c356e4ca23 \
-                        sha256  36a53815eb35ec44c154337d6fc72cca2452f5bf21ff24670ab00fddd4430419
-
-    use_autoconf        yes
-    autoconf.cmd        ${worksrcpath}/autogen.sh
+    checksums           rmd160  881c35b3f43dac209eeb08ca8305f5fc4f850ea9 \
+                        sha256  446042348bc2a91805f4fcc8a8ae744494699da142b20d9ce8b1765898ef0459 \
+                        size    586112
 }
 
 if {${name} eq ${subport}} {
     master_sites        http://www.qsl.net/hz1jw/pythonprop/downloads
-    patchfiles          patch-voaP2PPlot.py
+    use_autoreconf      yes
+    autoreconf.args     -fv
+} else {
+    use_autoconf        yes
+    autoconf.cmd        ${worksrcpath}/autogen.sh
 }
 
 post-patch {
-    if {${name} ne ${subport} && ![variant_isset builddoc]} {
+    if {![variant_isset builddoc]} {
         # comment out pdf document building in Makefile.am
-        reinplace -W ${worksrcpath}/docs/user/help "s+^pdf_DATA+#pdf_DATA+g" Makefile.am
-        reinplace -W ${worksrcpath}/docs/user/help "s+^voacapgui.pdf:+#voacapgui.pdf:+g" Makefile.am
-        reinplace -W ${worksrcpath}/docs/user/help "s+^	dblatex C+#	dblatex C+g" Makefile.am
+        reinplace -W ${worksrcpath} "s+data src docs/user/help+data src+g" Makefile.am
     }
 }
 
