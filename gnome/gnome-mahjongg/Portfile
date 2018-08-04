@@ -13,14 +13,15 @@ description         Solitaire (one player) version of the classic Eastern tile g
 long_description    ${description}
 homepage            https://wiki.gnome.org/Apps/Mahjongg
 
-version             3.20.0
+version             3.22.0
 
 set perl5.branch    [join [lrange [split ${perl5.version} .] 0 1] .]
 set name.branch     [join [lrange [split ${version} .] 0 1] .]
 master_sites        gnome:sources/${name}/${name.branch}
 
-checksums           rmd160  614d932593647ee25643ae13a462f850c5261959 \
-                    sha256  d09bb1923636dfd05b6f3a5af8d6fe7b6daa1434e2c06188dd27c96a61cea00a
+checksums           rmd160  ca95ebe3d0b19ea7582cdd29af3c69cecbb235cc \
+                    sha256  f5972a14fa4ad04153bd6e68475b85cd79c6b44f6cac1fe1edb64dbad4135218 \
+                    size    4323836
 
 use_xz              yes
 
@@ -35,8 +36,7 @@ depends_build       port:intltool \
 depends_lib         port:gnome-common \
                     port:librsvg
 
-depends_run         port:adwaita-icon-theme \
-                    port:gnome-themes-standard
+depends_run         port:adwaita-icon-theme
 
 use_autoconf        yes
 autoconf.cmd        ./autogen.sh
@@ -44,7 +44,7 @@ autoconf.cmd        ./autogen.sh
 post-activate {
     catch {system "${prefix}/bin/scrollkeeper-update"}
     catch {system "${prefix}/bin/update-desktop-database ${prefix}/share/applications"}
-    catch {system "${prefix}/bin/gtk-update-icon-cache -f -t ${prefix}/share/icons/hicolor"}
+    catch {system "${prefix}/bin/gtk-update-icon-cache-3.0 -f -t ${prefix}/share/icons/hicolor"}
     catch {system "${prefix}/bin/glib-compile-schemas ${prefix}/share/glib-2.0/schemas"}
 }
 
