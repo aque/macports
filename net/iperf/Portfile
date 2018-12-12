@@ -26,13 +26,13 @@ checksums           rmd160  4b75507a566582a6449a07395055a77ccf6ab37c \
                     size    324528
 
 subport ${name}-devel {
-    version         20180803
+    version         20181107
 
     conflicts       ${name}
 
     fetch.type      git
     git.url         git://git.code.sf.net/p/iperf2/code
-    git.branch      6f056ed1ab019a10965adbfeab1ae820ae167e28
+    git.branch      824e98cb0ce90a0d19ffd59477249689e5636562
 }
 
 if {${name} eq ${subport}} {
