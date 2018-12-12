@@ -35,7 +35,7 @@ depends_lib-append  port:py${python.version}-dnspython \
                     port:py${python.version}-ssdeep
 
 patch {
-    reinplace -W ${worksrcpath} "s|env python|env python${python.branch}|g" \
+    reinplace -E -W ${worksrcpath} "s|env python\[.0-9\]+|env python${python.branch}|g" \
         dnstwist.py
     reinplace -W ${worksrcpath} "s|path.join(DIR|path.join('${prefix}/share/${name}'|g" \
         dnstwist.py
@@ -64,9 +64,9 @@ destroot {
 
 subport ${name}-devel {
     conflicts ${name}
-    github.setup    elceef dnstwist fdf5ffc053aa5154672d20e1d65aa6883a1560bc
-    version         20180601
-    checksums       rmd160  d3b7ae99b519d7b9269a183cfaefe1c2400dc63e \
-                    sha256  8bbc24dcd851c53fa25337102728c2580fe8920222814b77b111d1dcdb4c2227 \
-                    size    1115605
+    github.setup    elceef dnstwist 182902f42c749cc4b58af06f8c312c92af1a73dc
+    version         20181103
+    checksums       rmd160  834ff98a6b1f18def7e355dfea44fa346192d499 \
+                    sha256  a32849f377d5b6d9f68a18e4283ac754cc19fbdbcd0a666acbc3411f0809a2ea \
+                    size    1115706
 }
