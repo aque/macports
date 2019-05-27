@@ -1,6 +1,15 @@
---- Makefile	2017-10-22 20:55:13.000000000 -0500
-+++ Makefile	2017-10-22 22:23:41.000000000 -0500
-@@ -32,8 +32,8 @@
+--- Makefile	2019-05-26 21:16:56.000000000 -0500
++++ Makefile	2019-05-26 21:19:29.000000000 -0500
+@@ -34,7 +34,7 @@
+ # build information may be added by CI scripts and will be
+ # displayed in the help text (qrq -h)
+ 
+-BUILD_INFO=" Date: $(shell date --iso=seconds)\n git branch/commit: $(shell if [ x${CI_COMMIT_REF_NAME} != x ]; then echo ${CI_COMMIT_REF_NAME} ; elif [ -e .git ] || [ -e ../.git ]; then git symbolic-ref --short HEAD ; else echo not built from git repository ; fi) / $(shell if [ x${CI_COMMIT_SHA} != x ]; then echo ${CI_COMMIT_SHA}; elif [ -e .git ] || [ -e ../.git ] ; then git rev-parse --verify HEAD ; else echo - ; fi )\n by $(USER)@$(shell hostname -f)\n OS: $(shell uname -s -r -p)\n Compiler: $(shell $(CC) --version | head -1)"
++BUILD_INFO=" Date: $(shell date -R)\n git branch/commit: $(shell if [ x${CI_COMMIT_REF_NAME} != x ]; then echo ${CI_COMMIT_REF_NAME} ; elif [ -e .git ] || [ -e ../.git ]; then git symbolic-ref --short HEAD ; else echo not built from git repository ; fi) / $(shell if [ x${CI_COMMIT_SHA} != x ]; then echo ${CI_COMMIT_SHA}; elif [ -e .git ] || [ -e ../.git ] ; then git rev-parse --verify HEAD ; else echo - ; fi )\n by $(USER)@$(shell hostname -f)\n OS: $(shell uname -s -r -p)\n Compiler: $(shell $(CC) --version | head -1)"
+ 
+ CFLAGS:=$(CFLAGS) -D DESTDIR=\"$(DESTDIR)\" -D BUILD_INFO=\"$(BUILD_INFO)\" -D VERSION=\"$(VERSION)\" -I.
+ 
+@@ -42,8 +42,8 @@
  		OBJECTS=qrq.o coreaudio.o
  		CFLAGS:=$(CFLAGS) -D CA -std=c99 -pthread
  		ifeq ($(OSX_PLATFORM), YES)

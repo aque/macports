@@ -10,12 +10,13 @@ license             GPL-2
 maintainers         gmail.com:allan.que openmaintainer
 description         morse telegraphy callsign trainer
 long_description    ${description}
-version             0.3.1
+version             0.3.3
 homepage            https://fkurz.net/ham/qrq.html
 master_sites        https://fkurz.net/ham/qrq
 
-checksums           rmd160  75a0e9a241c3fd58ceeda138d659262f7b36de54 \
-                    sha256  92988a33b7eddb3941cf91a285a57f4f0872722adf003350a8afe2caf83159a1
+checksums           rmd160  68ef7c8c5ff6de8541bba8f3ecb4d089333cd9cb \
+                    sha256  306ef7f8e0bbb16bdddc58a5d9c357e9b05c1a5c8a52680e5bae093a4064e945 \
+                    size    159832
 
 patchfiles          patch-Makefile.diff
 
