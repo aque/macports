@@ -4,12 +4,12 @@ PortSystem          1.0
 PortGroup           python 1.0
 
 name                py-ssdeep
-version             3.3
+version             3.4
 categories-append   security
 platforms           darwin
 license             LGPL-3+
 
-python.versions     26 27 33 34 35 36
+python.versions     27 36
 
 maintainers         gmail.com:allan.que openmaintainer
 
@@ -24,8 +24,9 @@ master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
 
 distname            ${python.rootname}-${version}
 
-checksums           rmd160  60218e6525bfd3b669478b340c1910387d1d63be \
-                    sha256  255de1f034652b3ed21920221017e70e570b1644f9436fea120ae416175f4ef5
+checksums           rmd160  41e848a4ae18de40d92cbb51815832abcfb8807e \
+                    sha256  1b5510716bc495a2b18300ea837fcf944552a1cc678bb74e384bce251d99a85f \
+                    size    110839
 
 if {${name} ne ${subport}} {
     depends_build-append \
