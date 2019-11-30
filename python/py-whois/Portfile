@@ -10,7 +10,7 @@ categories-append   net
 platforms           darwin
 license             Permissive
 
-python.versions     26 27 33 34 35
+python.versions     27 36
 
 maintainers         gmail.com:allan.que openmaintainer
 
