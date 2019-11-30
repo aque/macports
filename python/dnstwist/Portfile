@@ -35,7 +35,7 @@ depends_lib-append  port:py${python.version}-dnspython \
                     port:py${python.version}-ssdeep
 
 patch {
-    reinplace -E -W ${worksrcpath} "s|env python\[.0-9\]+|env python${python.branch}|g" \
+    reinplace -E -W ${worksrcpath} "s|env python\[.0-9\]?|env python${python.branch}|g" \
         dnstwist.py
     reinplace -W ${worksrcpath} "s|path.join(DIR|path.join('${prefix}/share/${name}'|g" \
         dnstwist.py
