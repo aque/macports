@@ -4,7 +4,7 @@
 PortSystem          1.0
 PortGroup           github 1.0
 
-github.setup        elceef dnstwist 1.02 v
+github.setup        elceef dnstwist 20190706
 
 name                dnstwist
 categories          python security sysutils net
@@ -20,11 +20,12 @@ homepage            https://github.com/elceef/dnstwist
 conflicts           ${name}-devel
 
 
-checksums           rmd160  4f4068df04cb59e7c9967a77df78eb12348893a0 \
-                    sha256  2cc47ea8dd7b098bb35cd5da2f4cd62e8d734add34aedcd1db5f1a424cac60b3
+checksums           rmd160  d4309d56018cd3eb316da4ab7eaaad90dddd4050 \
+                    sha256  cfa0a5129e627ba0342ea86d3ff093b57a0791ef1602f643f335ee5a0546261c \
+                    size    1130325
 
-set python.branch   2.7
-set python.version  27
+set python.branch   3.6
+set python.version  36
 use_configure       no
 
 depends_run-append  port:python${python.version}
