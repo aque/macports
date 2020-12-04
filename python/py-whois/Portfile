@@ -4,13 +4,13 @@ PortSystem          1.0
 PortGroup           python 1.0
 
 name                py-whois
-version             0.9.4
+version             0.9.7
 categories-append   net
 platforms           darwin
 supported_archs     noarch
 license             Permissive
 
-python.versions     27 36
+python.versions     27 36 37 38 39
 
 maintainers         gmail.com:allan.que openmaintainer
 
@@ -23,9 +23,9 @@ master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
 
 distname            ${python.rootname}-${version}
 
-checksums           rmd160  904f54fb69befc765ecac08ea3b7e4e565f8c81e \
-                    sha256  ee7fd23b13cdf33b94d633a31edac9f4e4015a72455f5d669837a8ad100612ce \
-                    size    6626
+checksums           rmd160  eeecddce8cdbdb13284fbcf309d1d9978291f861 \
+                    sha256  1e0348c6cc763e1a7c87d32ce877e2531096928e477fdb2e100aa3783e2b4279 \
+                    size    8207
 
 if {${name} ne ${subport}} {
     depends_build-append \
