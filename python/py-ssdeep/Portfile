@@ -9,7 +9,7 @@ categories-append   security
 platforms           darwin
 license             LGPL-3+
 
-python.versions     27 36
+python.versions     27 36 37 38 39
 
 maintainers         gmail.com:allan.que openmaintainer
 
