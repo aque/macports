@@ -25,21 +25,8 @@ app.executable      ${filespath}/wrapper.sh
 app.icon            src/${name}/ui/voacap.png
 app.identifier      net.hz1jw.pythonprop
 
-variant python34 conflicts python35 description {Use python 3.4} {}
-
-variant python35 conflicts python34 description {Use python 3.5} {}
-
-if {![variant_isset python34] && ![variant_isset python35]} {
-    default_variants-append +python35
-}
-
-if {[variant_isset python34]} {
-    set python.version  34
-    set python.branch   3.4
-} elseif {[variant_isset python35]} {
-    set python.version  35
-    set python.branch   3.5
-}
+set python.version  36
+set python.branch   3.6
 
 variant builddoc description {Build the .pdf doc - requires dblatex} {
     depends_build-append    port:dblatex

@@ -4,9 +4,9 @@ PortSystem          1.0
 PortGroup           github 1.0
 PortGroup           python 1.0
 
-github.setup        USArmyResearchLab Dshell 695c8917d2b6636f857980012a45fd4faf774400
+github.setup        USArmyResearchLab Dshell 7b3ef0bd7192f6ec6665a5985d61accf3e4a5789
 name                dshell
-version             20190522
+version             20210112
 categories-append   net security
 maintainers         gmail.com:allan.que openmaintainer
 license             MIT
@@ -16,11 +16,11 @@ description         An extensible network forensic analysis framework.
 long_description    ${description} Enables rapid development of plugins to \
                     support the dissection of network packet captures.
 
-checksums           rmd160  664f0aff0783b140b7d9aab8172940219142248d \
-                    sha256  02212b97f0ba679a25b0937719e27e207761452373bd097982c24ac61f661f7e \
-                    size    717269
+checksums           rmd160  73550bee8cda05d00cf1d4666be6ac3113b83b64 \
+                    sha256  4d0fdf86923a499e2e886c6ee8b5d061bb564f5a30c6bdd36562eb7eb66445fb \
+                    size    190821
 
-python.default_version  27
+python.default_version  37
 
 depends_run         port:GeoLiteCity \
                     port:geoipupdate
@@ -54,15 +54,15 @@ set dshell.decoderpath "${prefix}/lib/dshell/decoders"
 # LIBPATH
 set dshell.libpath "${prefix}/lib/dshell"
 
-patch {
-    # update python files with the exact python version
-    fs-traverse f ${worksrcpath} {
-        if {[string match "*.py" ${f}]} {
-            reinplace -q "s+env python+env python${python.branch}+g" ${f}
-            reinplace -q "s+bin/python+bin/python${python.branch}+g" ${f}
-        }
-    }
-}
+#patch {
+#    # update python files with the exact python version
+#    fs-traverse f ${worksrcpath} {
+#        if {[string match "*.py" ${f}]} {
+#            reinplace -q "s+env python+env python${python.branch}+g" ${f}
+#            reinplace -q "s+bin/python+bin/python${python.branch}+g" ${f}
+#        }
+#    }
+#}
 
 post-build {
     foreach f [glob -type f -dir ${worksrcpath}/doc *.html] {
