@@ -3,7 +3,7 @@
 PortSystem          1.0
 
 name                iperf
-version             2.0.14a
+version             2.1.4
 categories          net
 platforms           darwin
 license             permissive
@@ -21,9 +21,9 @@ master_sites        sourceforge:iperf2
 
 conflicts           ${name}-devel
 
-checksums           rmd160  49793734b2acf649b84da5a5830b0bc983cfe38b \
-                    sha256  6fc8a17f0ef8c3c616fd8a499223368d3890c62f64ddb90863709f4c0a1e800b \
-                    size    375288
+checksums           rmd160  26262ed6c1b062555c27ea7979916566964f81e1 \
+                    sha256  062b392e87b8e227aca74fef0a99b04fe0382d4518957041b508a56885b4d4f9 \
+                    size    395909
 
 subport ${name}-devel {
     version         20201204
