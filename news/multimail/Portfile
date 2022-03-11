@@ -14,12 +14,12 @@ long_description    ${name} MultiMail is an offline mail packet reader for Unix/
                     It supports the Blue Wave, QWK, OMEN, SOUP and OPX formats.
 homepage            http://wmcbrine.com/mmail/
 
-github.setup        wmcbrine MultiMail 1d216545cda9b4a47fda7d5c4f40f603166b377c
-version             20210919
+github.setup        wmcbrine MultiMail 2149ca3f7357185831e89b6464b84fd7e249c91b
+version             20220121
 
-checksums           rmd160  7bfde61c3c454947e63f65afe4ce3401e3e45b26 \
-                    sha256  861bac573fb8f182932db98f945158baf371c75d3502480efd4c1e89b9eef661 \
-                    size    221432
+checksums           rmd160  095a5d9357b13ff0550001a0ba9fa9ca39860d91 \
+                    sha256  321080a4d88f91beeaff843f958ffd2ffa7bbade66ec6382ca818363278ef6b4 \
+                    size    233910
 
 depends_run         port:zip
 depends_lib         port:ncurses
@@ -30,7 +30,7 @@ pre-destroot {
     reinplace -W ${worksrcpath} "s|PREFIX)/man|PREFIX)/share/man|g" Makefile
 
     xinstall -d ${destroot}${prefix}/share/doc/${name}
-    xinstall -m 644 -W ${worksrcpath} COPYING.md HISTORY.md README.md \
+    xinstall -m 644 -W ${worksrcpath} LEGAL.md HISTORY.md README.md MANUAL.md \
         ${destroot}${prefix}/share/doc/${name}
 
     xinstall -d ${destroot}${prefix}/share/examples/${name}
