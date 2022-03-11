@@ -10,15 +10,13 @@ license             GPL-2
 maintainers         gmail.com:allan.que openmaintainer
 description         morse telegraphy callsign trainer
 long_description    ${description}
-version             0.3.3
+version             0.3.5
 homepage            https://fkurz.net/ham/qrq.html
 master_sites        https://fkurz.net/ham/qrq
 
-checksums           rmd160  68ef7c8c5ff6de8541bba8f3ecb4d089333cd9cb \
-                    sha256  306ef7f8e0bbb16bdddc58a5d9c357e9b05c1a5c8a52680e5bae093a4064e945 \
-                    size    159832
-
-patchfiles          patch-Makefile.diff
+checksums           rmd160  8e240762f0304794f56944696be287dd68aae0e6 \
+                    sha256  3b068c960d06b254dca5a48c7813f1653fc53cb6f5ced641e007091a7ec08d4f \
+                    size    195012
 
 variant bundle description {Build macOS application bundle} {
     build.cmd-append \
@@ -36,7 +34,7 @@ if {![variant_isset bundle]} {
 use_configure       no
 
 # issues with ncurses 6 line drawings. build with macOS version instead.
-build.env-append    LDFLAGS="-L/usr/lib -lncurses"
+build.env-append    LDFLAGS=-L/usr/lib
 build.cmd-append    OSX_PLATFORM=YES \
                     USE_PA=NO \
                     USE_CA=YES \
