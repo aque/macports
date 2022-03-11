@@ -4,7 +4,7 @@
 PortSystem          1.0
 PortGroup           github 1.0
 
-github.setup        elceef dnstwist 20201228
+github.setup        elceef dnstwist 20220131
 
 name                dnstwist
 categories          python security sysutils net
@@ -20,9 +20,9 @@ homepage            https://github.com/elceef/dnstwist
 conflicts           ${name}-devel
 
 
-checksums           rmd160  f4599ed28c26c766dfcd61a63711ea93185f4699 \
-                    sha256  891f6193fcbaf0dfa3eab45b427343d52a4fe5f3a98ff9abbba35cea0fb6fdd8 \
-                    size    596777
+checksums           rmd160  bce3c1565b61958ed9beccb284da2eb8a42678a3 \
+                    sha256  36e914276e0add737653b7831512bdc01c09f787b5f61e6e00986ff486959531 \
+                    size    598020
 
 set python.branch   3.9
 set python.version  39
@@ -65,9 +65,10 @@ destroot {
 
 subport ${name}-devel {
     conflicts ${name}
-    github.setup    elceef dnstwist 35eff26e572e63a21bcbf1bd9d70869bf09e7d38
-    version         20210703
-    checksums       rmd160  fb948e00cfdd800ab1972f7ed22008640bbc199a \
-                    sha256  247cf02edb7b159eb17dd27969d4d4e0d1be3134ed842d26fb6d7ee0acd8bff1 \
-                    size    596983
+    github.setup    elceef dnstwist 1d1c92685c973c172afd749e4f9a14f7ccb45ee9
+    version         20220221
+    checksums       rmd160  8b09ec7c17ca3c1dfd70987c65f57779e814d25a \
+                    sha256  a3c765f0df32d7dc971557e29922af861335d9d5c8c05ba5ba30ad31d0f753cb \
+                    size    599785
+
 }
