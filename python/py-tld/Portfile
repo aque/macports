@@ -1,0 +1,38 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-tld
+version             0.13
+categories-append   security
+platforms           darwin
+license             LGPL-3+
+
+python.versions     37 38 39 310 311
+
+maintainers         gmail.com:allan.que openmaintainer
+
+description         Extract top level domain from URL
+
+long_description    ${name} extract the top level domain (TLD) from the URL given. \
+                    List of TLD names is taken from Public Suffix.
+
+homepage            https://github.com/elceef/${python.rootname}
+master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
+
+distname            ${python.rootname}-${version}
+
+checksums           rmd160  17f18989f6fe3e99d3489479f4bd2ba18a3c458a \
+                    sha256  93dde5e1c04bdf1844976eae440706379d21f4ab235b73c05d7483e074fb5629 \
+                    size    446824
+
+if {${name} ne ${subport}} {
+    depends_build-append \
+                        port:py${python.version}-setuptools_scm \
+
+    livecheck.type      none
+} else {
+    livecheck.type      pypi
+}
+
