@@ -1,0 +1,38 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-ppdeep
+version             20200505
+categories-append   security
+platforms           darwin
+license             LGPL-3+
+
+python.versions     36 37 38 39 310 311
+
+maintainers         gmail.com:allan.que openmaintainer
+
+description         Pure-Python library for computing fuzzy hashes
+
+long_description    ${name} This is a pure-Python library for computing context triggered \
+                    piecewise hashes (CTPH), also called fuzzy hashes, or often ssdeep after \
+                    the name of a popular tool. At a very high level, fuzzy hashing is a way \
+                    to determine whether two inputs are similar, rather than identical. Fuzzy \
+                    hashes are widely adopted in digital forensics and malware detection.
+
+homepage            https://github.com/elceef/${python.rootname}
+master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
+
+distname            ${python.rootname}-${version}
+
+checksums           rmd160  9da076e47b1bdbfa5b65e703739aea4fde531a69 \
+                    sha256  acc74bb902e6d21b03d39aed740597093c6562185bfe06da9b5272e01c80a1ff \
+                    size    4309
+
+if {${name} ne ${subport}} {
+    livecheck.type      none
+} else {
+    livecheck.type      pypi
+}
+
