@@ -3,7 +3,7 @@
 PortSystem          1.0
 
 name                iperf
-version             2.1.4
+version             2.1.9
 categories          net
 platforms           darwin
 license             permissive
@@ -21,18 +21,21 @@ master_sites        sourceforge:iperf2
 
 conflicts           ${name}-devel
 
-checksums           rmd160  26262ed6c1b062555c27ea7979916566964f81e1 \
-                    sha256  062b392e87b8e227aca74fef0a99b04fe0382d4518957041b508a56885b4d4f9 \
-                    size    395909
+checksums           rmd160  5d8120fa7d57b86409a354ba16134a425810133f \
+                    sha256  5c0771aab00ef14520013aef01675977816e23bb8f5d9fde016f90eb2f1be788 \
+                    size    425427
+
+test.run            yes
+test.target         check
 
 subport ${name}-devel {
-    version         20210928
+    version         20231119
 
     conflicts       ${name}
 
     fetch.type      git
     git.url         git://git.code.sf.net/p/iperf2/code
-    git.branch      3afe38e0aa3908a67e0d5867b1e71b6e708bc4de
+    git.branch      ec9def898204e09f269fe071fe5102a0b371fb6b
 }
 
 if {${name} eq ${subport}} {
