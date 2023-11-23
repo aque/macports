@@ -4,7 +4,7 @@
 PortSystem          1.0
 PortGroup           github 1.0
 
-github.setup        elceef dnstwist 20220131
+github.setup        elceef dnstwist 20230918
 
 name                dnstwist
 categories          python security sysutils net
@@ -20,9 +20,9 @@ homepage            https://github.com/elceef/dnstwist
 conflicts           ${name}-devel
 
 
-checksums           rmd160  bce3c1565b61958ed9beccb284da2eb8a42678a3 \
-                    sha256  36e914276e0add737653b7831512bdc01c09f787b5f61e6e00986ff486959531 \
-                    size    598020
+checksums           rmd160  ee5cac2b4c529710ea04bb0cd808384d25673f45 \
+                    sha256  a6e788ff785766fc4a7f8718060e69053bc737ded837bf0444d179232730e2e1 \
+                    size    415480
 
 set python.branch   3.9
 set python.version  39
@@ -30,10 +30,13 @@ use_configure       no
 
 depends_run-append  port:python${python.version}
 depends_lib-append  port:py${python.version}-dnspython \
-                    port:py${python.version}-geoip \
+                    port:py${python.version}-geoip2 \
                     port:py${python.version}-whois \
                     port:py${python.version}-requests \
-                    port:py${python.version}-ssdeep
+                    port:py${python.version}-ppdeep \
+                    port:py${python.version}-tlsh \
+                    port:py${python.version}-tld \
+                    port:py${python.version}-idna
 
 patch {
     reinplace -E -W ${worksrcpath} "s|env python\[.0-9\]?|env python${python.branch}|g" \
