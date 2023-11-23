@@ -1,0 +1,28 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup python    1.0
+
+name                py-geoip2
+version             4.7.0
+categories-append   net
+platforms           darwin
+license             apache
+maintainers         {gmail.com:allan.que @aque}
+
+description         API for the GeoIP2 and GeoLite2 web services and databases
+long_description    ${description}
+
+homepage            http://www.maxmind.com/
+master_sites        pypi:g/geoip2
+distname            geoip2-${version}
+
+checksums           rmd160  57ec886dcab89c08fdb04c7838ecaf954ef54fc3 \
+                    sha256  3bdde4994f6bc917eafab5b51e772d737b2ae00037a5b85001fb06dc68f779df \
+                    size    356438
+
+python.versions     37 38 39 310
+
+if {${name} ne ${subport}} {
+    livecheck.type  none
+}
