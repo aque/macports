@@ -10,7 +10,7 @@ platforms           darwin
 supported_archs     noarch
 license             Permissive
 
-python.versions     27 36 37 38 39
+python.versions     27 36 37 38 39 310
 
 maintainers         gmail.com:allan.que openmaintainer
 
