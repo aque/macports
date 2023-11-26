@@ -24,8 +24,8 @@ checksums           rmd160  ee5cac2b4c529710ea04bb0cd808384d25673f45 \
                     sha256  a6e788ff785766fc4a7f8718060e69053bc737ded837bf0444d179232730e2e1 \
                     size    415480
 
-set python.branch   3.9
-set python.version  39
+set python.branch   3.10
+set python.version  310
 use_configure       no
 
 depends_run-append  port:python${python.version}
@@ -39,7 +39,7 @@ depends_lib-append  port:py${python.version}-dnspython \
                     port:py${python.version}-idna
 
 patch {
-    reinplace -E -W ${worksrcpath} "s|env python\[.0-9\]?|env python${python.branch}|g" \
+    reinplace -E -W ${worksrcpath} "s|env python\[.0-9\]*|env python${python.branch}|g" \
         dnstwist.py
     reinplace -W ${worksrcpath} "s|path.join(DIR|path.join('${prefix}/share/${name}'|g" \
         dnstwist.py
@@ -68,10 +68,10 @@ destroot {
 
 subport ${name}-devel {
     conflicts ${name}
-    github.setup    elceef dnstwist 1d1c92685c973c172afd749e4f9a14f7ccb45ee9
-    version         20220221
-    checksums       rmd160  8b09ec7c17ca3c1dfd70987c65f57779e814d25a \
-                    sha256  a3c765f0df32d7dc971557e29922af861335d9d5c8c05ba5ba30ad31d0f753cb \
-                    size    599785
+    github.setup    elceef dnstwist 2689769276718daaf84b624a912a2a0e2751cf1c
+    version         20231123
+    checksums       rmd160  aa6186005f168f78cffd2a75708dc66ac99e0bb8 \
+                    sha256  95ef5d3bb6137db9846446b46aa0a409154b9c52201dc3b8df3c29b3a8992475 \
+                    size    415810
 
 }
