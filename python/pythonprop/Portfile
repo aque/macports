@@ -2,6 +2,7 @@
 
 PortSystem          1.0
 PortGroup           app 1.0
+PortGroup           github 1.0
 
 name                pythonprop
 categories          python science
@@ -16,7 +17,7 @@ long_description    ${name} is a collection of Python scripts designed to work \
                     propagation to predict point-to-point path loss and coverage.
 homepage            http://www.qsl.net/h/hz1jw/pythonprop
 
-version             0.28
+github.setup        jawatson ${name} 0.30.1 v
 revision            0
 conflicts           ${name}-devel
 
@@ -25,51 +26,44 @@ app.executable      ${filespath}/wrapper.sh
 app.icon            src/${name}/ui/voacap.png
 app.identifier      net.hz1jw.pythonprop
 
-set python.version  36
-set python.branch   3.6
+set python.version  310
+set python.branch   3.10
 
 variant builddoc description {Build the .pdf doc - requires dblatex} {
     depends_build-append    port:dblatex
 }
 
-checksums           rmd160  46dc7366d0f508319b608e7323c6ca2bc7e49b8e \
-                    sha256  73b29158d4ae03fd0cd70425b8ee1584ce908090744f366e9d2d3f80ed95e08b \
-                    size    1141959
+checksums           rmd160  c4bd74416f04c2285a2986360274483d022ee388 \
+                    sha256  1bcfe8529a1ec87f40a3726d7ebece87727d4d20b681870764f8c7879650ac19 \
+                    size    1141974
 
 depends_build       port:makeicns \
                     port:gnome-doc-utils
 
-depends_lib         port:py${python.version}-pip \
-                    port:py${python.version}-matplotlib-basemap \
-                    port:py${python.version}-gobject3 \
-                    port:py${python.version}-cairocffi
+depends_lib         port:py${python.version}-matplotlib \
+                    port:py${python.version}-cartopy \
+                    port:py${python.version}-scipy \
+                    port:yelp-tools \
+                    port:itstool
 
-depends_run         port:py${python.version}-pyproj \
-                    port:adwaita-icon-theme \
-                    port:yelp \
+depends_run         port:py${python.version}-gobject3 \
+                    port:gtk3 \
                     port:voacapl
 
-configure.env-append    PYTHON="${prefix}/bin/python${python.branch}"
+use_autoreconf      yes
+configure.env-append \
+                    PYTHON=${prefix}/bin/python${python.branch}
 build.target        {}
 
 subport ${name}-devel {
-    PortGroup           github 1.0
-    github.setup        jawatson pythonprop 5bf1d555378337f978e08225e2ddd731662c27ad
-    version             20180304
+    github.setup        jawatson pythonprop e24bb23381d651c015037d2d8369b4104e74cc40
+    version             20230224
     conflicts           ${name}
 
-    checksums           rmd160  881c35b3f43dac209eeb08ca8305f5fc4f850ea9 \
-                        sha256  446042348bc2a91805f4fcc8a8ae744494699da142b20d9ce8b1765898ef0459 \
-                        size    586112
-}
+    checksums           rmd160  270caabbb84f921806c0dd3aaa8b1a6bf9b4f60c \
+                        sha256  7f72110f0e6260e1ed75cf243cedeab7ae924fd553eca5497ce619883a03235f \
+                        size    1142009
 
-if {${name} eq ${subport}} {
-    master_sites        http://www.qsl.net/hz1jw/pythonprop/downloads
-    use_autoreconf      yes
-    autoreconf.args     -fv
-} else {
-    use_autoconf        yes
-    autoconf.cmd        ${worksrcpath}/autogen.sh
 }
 
 post-patch {
